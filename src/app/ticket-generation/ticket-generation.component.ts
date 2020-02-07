@@ -14,30 +14,33 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class TicketGenerationComponent implements OnInit {
  showForm: boolean;
  ticket: string;
- type: string ="BUG";
- priority: string ="MEDIUM";
+ type: string='BUG';
+ priority: string='MEDIUM';
  description:string;
  uploadFile: File;
  base64textString:string | ArrayBuffer;
  fileExtension: string;
-isFileAttached:boolean;
+ isFileAttached:boolean;
  response:any;
  fileName: string;
- 
+
 previewUrl:any = null;
   @Output() closeModalEvent = new EventEmitter();
-  
 
-  
+
+
   constructor(private _ticketService:TicketService, private domSanitizer: DomSanitizer) {
     this.showForm = false;
    }
-   
+
   ngOnInit() {
   }
-    
-  
+
+
   saveTicketInfo(event:any){
+
+   // console.log('submitted...');
+
     event.preventDefault();
     this.showForm = true;
     document.getElementById('id01').style.visibility="hidden";
@@ -47,13 +50,13 @@ previewUrl:any = null;
       userId: "vamsi@altimetrik.com",
       ticket: this.ticket,
       description: this.description,
-      
+
       attached: this.isFileAttached,
       type: this.type,
       priority: this.priority,
       fileBase64: this.base64textString,
       fileExtension: this.fileExtension
-    }; 
+    };
 
    this._ticketService.saveTicketInfo(saveRequest).subscribe(
       data=>{
@@ -65,10 +68,10 @@ previewUrl:any = null;
           console.log("display all"+ GlobalConstant.dataSource.data);
         }
       },
-      (error)=>{ 
+      (error)=>{
         console.log(error.error.message);
       }
-    ); 
+    );
     this.ticket="";
     this.type="BUG";
     this.priority="NORMAL";
@@ -77,20 +80,20 @@ previewUrl:any = null;
 
   }
   changeListener($event) : void {
-   
+
     this.readThis($event.target);
   }
-  
+
   readThis(inputValue: any): void {
     var file:File = inputValue.files[0];
     var myReader:FileReader = new FileReader();
     console.log("our file is attached "+this.fileName);
-   
+
     myReader.onloadend = (e) => {
       // console.log("this.image="+myReader.result);
       // let bufferImg: string | ArrayBuffer;
-      
-      
+
+
       this.base64textString = myReader.result;
       this.fileExtension = this.fileName.split(".")[1];
       console.log("file extension updated "+this.fileExtension);
@@ -98,11 +101,11 @@ previewUrl:any = null;
           this.isFileAttached=true;
           console.log(this.base64textString);
       }
-     
+
     }
     myReader.readAsDataURL(file);
   }
- 
+
 displayPop(event:any)
 {
   console.log('triggered')
