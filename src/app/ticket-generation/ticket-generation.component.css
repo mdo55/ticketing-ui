@@ -1,6 +1,6 @@
 .modal {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
+    position:fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
@@ -94,14 +94,14 @@
   .col-25 {
     float: left;
     width: 25%;
-    margin-top: 6px;
+    margin-top: 3px;
   }
 
   /* Floating column for inputs: 75% width */
   .col-75 {
     float: left;
     width: 70%;
-    margin-top: 6px;
+    margin-top: 3px;
   }
 
   /* Clear floats after the columns */
