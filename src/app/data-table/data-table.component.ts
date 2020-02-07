@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { TicketService } from '../ticket.service';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
 import {GlobalConstant} from '../common/GlobalConstants';
@@ -15,7 +14,7 @@ import {GlobalConstant} from '../common/GlobalConstants';
 export class DataTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatTable, {static: false}) table: MatTable<DataTableItem>;
+
   dataSource: MatTableDataSource<any>;
 constructor(private _ticketService:TicketService){}
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */

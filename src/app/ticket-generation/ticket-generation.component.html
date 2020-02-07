@@ -68,13 +68,22 @@ class="close"  title="Close Modal">&times;</span>
           <!-- <input type="file"  [(ngModel)]="uploadFile" [ngModelOptions]="{standalone: true}"> -->
           <input type="file"  [(ngModel)]="fileName" [ngModelOptions]="{standalone: true}"
           accept="image/*" (change)="changeListener($event)">
+        
+          <div class="" *ngIf="fileName">
+            <img [src]="base64textString"  height="110" />                 
+          </div>
+
+       
+        
+         
+         
       </div>
       </div>
 
       <br>
       <div class="row">
           <div style="width:62%;"><input type="reset" value="Clear"></div>
-          <div style="width:50%;"><input type="submit"  value="Save"></div>
+          <div style="width:50%;"><input type="submit"  value="Save" ></div>
       </div>
 
 

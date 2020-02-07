@@ -5,6 +5,7 @@ import { EventEmitter } from 'events';
 import { Options } from 'selenium-webdriver/opera';
 import {GlobalConstant} from '../common/GlobalConstants';
 import { MatTableDataSource } from '@angular/material/table';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-ticket-generation',
   templateUrl: './ticket-generation.component.html',
@@ -13,8 +14,8 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TicketGenerationComponent implements OnInit {
  showForm: boolean;
  ticket: string;
- type: string;
- priority: string;
+ type: string ="BUG";
+ priority: string ="MEDIUM";
  description:string;
  uploadFile: File;
  base64textString:string | ArrayBuffer;
@@ -22,14 +23,20 @@ export class TicketGenerationComponent implements OnInit {
 isFileAttached:boolean;
  response:any;
  fileName: string;
+ 
+previewUrl:any = null;
   @Output() closeModalEvent = new EventEmitter();
-  constructor(private _ticketService:TicketService) {
+  
+
+  
+  constructor(private _ticketService:TicketService, private domSanitizer: DomSanitizer) {
     this.showForm = false;
    }
-
+   
   ngOnInit() {
   }
-
+    
+  
   saveTicketInfo(event:any){
     event.preventDefault();
     this.showForm = true;
@@ -40,6 +47,7 @@ isFileAttached:boolean;
       userId: "vamsi@altimetrik.com",
       ticket: this.ticket,
       description: this.description,
+      
       attached: this.isFileAttached,
       type: this.type,
       priority: this.priority,
@@ -69,6 +77,7 @@ isFileAttached:boolean;
 
   }
   changeListener($event) : void {
+   
     this.readThis($event.target);
   }
   
@@ -76,15 +85,20 @@ isFileAttached:boolean;
     var file:File = inputValue.files[0];
     var myReader:FileReader = new FileReader();
     console.log("our file is attached "+this.fileName);
+   
     myReader.onloadend = (e) => {
       // console.log("this.image="+myReader.result);
       // let bufferImg: string | ArrayBuffer;
-      this. base64textString = myReader.result;
+      
+      
+      this.base64textString = myReader.result;
       this.fileExtension = this.fileName.split(".")[1];
       console.log("file extension updated "+this.fileExtension);
       if(this.base64textString){
           this.isFileAttached=true;
+          console.log(this.base64textString);
       }
+     
     }
     myReader.readAsDataURL(file);
   }
@@ -97,4 +111,5 @@ displayPop(event:any)
   this.showForm = false;
 
 }
+
 }
