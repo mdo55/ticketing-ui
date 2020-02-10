@@ -2,13 +2,11 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import { TicketService } from '../ticket.service';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
 import {GlobalConstant} from '../common/GlobalConstants';
+import { ActivatedRoute ,Params } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-data-table',
@@ -20,14 +18,54 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   dataSource: MatTableDataSource<any>;
-constructor(private _ticketService:TicketService){}
+   searchKey:string;
+
+  // ticketId :number;
+  // editMode=false;
+  // showForm :FormGroup;
+constructor(private _ticketService:TicketService,private route : ActivatedRoute ){}
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'priority'];//,'createdBy'];//, 'actions'];
 
   ngOnInit() {
     // this.dataSource: DataTableDataSource<any>;
-    this.getPage();
+     this.getPage();
+  
+     
+    // this.route.params
+    // .subscribe(
+    //   (params: Params) => {
+    //       this.ticketId = +params['id'];
+    //       this.editMode =params['id'] !=null;
+    //       this.initForm();
+
+
+    //   });
   }
+  // private initForm(){
+   
+  //   let ticketName ='';
+  //   let ticketType ='';
+  //   let ticketDescription = '';
+  //   let ticketPriority = '';
+  //   let ticketAttached = '';
+  //   if(this.editMode){
+  //     const tick = this._ticketService.getTicket(this.ticketId);
+  //     ticketName =tick.ticket;
+  //     ticketType =tick.type;
+  //     ticketDescription = tick.description;
+  //     ticketPriority =tick.priority;
+
+
+  //   }
+  //   this.showForm = new FormGroup({
+  //     'ticket' :new FormControl(ticketName),
+  //     'type' :new FormControl(ticketType),
+  //     'description' : new FormControl(ticketDescription),
+  //     'priority' : new FormControl(ticketPriority)
+  //   });
+
+  // }
 
   ngAfterViewInit() {
     // this.dataSource.sort = this.sort;
@@ -54,10 +92,34 @@ this._ticketService.getPage().subscribe(
   console.log(error.error.message);
 });
 
-}
-
-saveTicketInfo(){
-
 
 }
+  openDialog(data, event: any): void {
+    console.log("event triggered: "+data.ticketId);
+
+     let ticketInfo: any = this.findById(data.ticketId);
+  }
+
+  findById(ticketId : number): any {
+
+    return this._ticketService.findById(ticketId).subscribe(
+        data=> {
+          console.log(data);
+        },
+        (error)=>{
+          console.log(error.error.message);
+        });
+  }
+
+
+
+  onSearchClear(){
+    this.searchKey="";
+    this.applyFilter();
+    }
+    
+    applyFilter(){
+    this.dataSource.filter=this.searchKey.trim().toLowerCase();
+    } 
+    
 }

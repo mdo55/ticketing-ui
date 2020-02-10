@@ -10,6 +10,7 @@ export class TicketService {
   private baseUrl:string="http://localhost:8088/ticketsysmgmt/";
   private saveTicket: string = this.baseUrl+ 'saveTicket';
   private loadPage: string = this.baseUrl + 'loadPage';
+  private _findById : string = this.baseUrl + 'findBy/';
   headers: HttpHeaders;
   constructor(private _http:HttpClient) { 
     this.headers = new HttpHeaders();
@@ -27,6 +28,9 @@ return this._http.get(this.loadPage);
   }
   saveTicketInfo(data): Observable<any> {
     return this._http.post(this.saveTicket, data, {headers: this.headers});
-
   }
+
+  findById(ticketId): Observable<any> {
+    return this._http.get(this._findById+ticketId)
+  } 
 }
