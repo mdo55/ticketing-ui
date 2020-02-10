@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { TicketService } from './ticket.service';
 import {MatIconModule} from '@angular/material/icon';
+import { IconImportModule } from 'mat-icon-import';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatIconModule} from '@angular/material/icon';
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    IconImportModule
   ],
   providers: [
     TicketService
