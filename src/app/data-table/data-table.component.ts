@@ -14,24 +14,32 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent implements AfterViewInit, OnInit {
+
+
+
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   dataSource: MatTableDataSource<any>;
+<<<<<<< Updated upstream
    searchKey:string;
 
   // ticketId :number;
   // editMode=false;
   // showForm :FormGroup;
 constructor(private _ticketService:TicketService,private route : ActivatedRoute ){}
+=======
+  searchKey:string;
+constructor(private _ticketService:TicketService){}
+>>>>>>> Stashed changes
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'priority'];//,'createdBy'];//, 'actions'];
 
   ngOnInit() {
     // this.dataSource: DataTableDataSource<any>;
      this.getPage();
-  
-     
+
+
     // this.route.params
     // .subscribe(
     //   (params: Params) => {
@@ -43,7 +51,7 @@ constructor(private _ticketService:TicketService,private route : ActivatedRoute 
     //   });
   }
   // private initForm(){
-   
+
   //   let ticketName ='';
   //   let ticketType ='';
   //   let ticketDescription = '';
@@ -111,15 +119,13 @@ this._ticketService.getPage().subscribe(
         });
   }
 
-
-
   onSearchClear(){
     this.searchKey="";
     this.applyFilter();
-    }
-    
-    applyFilter(){
+  }
+
+  applyFilter(){
     this.dataSource.filter=this.searchKey.trim().toLowerCase();
-    } 
-    
+  }
 }
+

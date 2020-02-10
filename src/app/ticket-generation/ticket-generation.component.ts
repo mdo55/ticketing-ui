@@ -6,6 +6,8 @@ import { Options } from 'selenium-webdriver/opera';
 import {GlobalConstant} from '../common/GlobalConstants';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
+
+
 @Component({
   selector: 'app-ticket-generation',
   templateUrl: './ticket-generation.component.html',

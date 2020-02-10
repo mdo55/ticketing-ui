@@ -68,15 +68,19 @@ class="close"  title="Close Modal">&times;</span>
           <!-- <input type="file"  [(ngModel)]="uploadFile" [ngModelOptions]="{standalone: true}"> -->
           <input type="file"  [(ngModel)]="fileName" [ngModelOptions]="{standalone: true}"
           accept="image/*" (change)="changeListener($event)">
+<<<<<<< Updated upstream
           <div class="" *ngIf="fileName">
         
             <img [src]="base64textString"  height="120" />                 
+=======
+
+          <div class="" *ngIf="fileName">
+            <img [src]="base64textString"  height="110" />
+>>>>>>> Stashed changes
           </div>
 
-       
-        
-         
-         
+
+
       </div>
       </div>
 
