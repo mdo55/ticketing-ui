@@ -11,6 +11,7 @@ export class TicketService {
   private saveTicket: string = this.baseUrl+ 'saveTicket';
   private loadPage: string = this.baseUrl + 'loadPage';
   private _findById : string = this.baseUrl + 'findBy/';
+  private _updateTicket : string = this.baseUrl + 'updateTicket';
   headers: HttpHeaders;
   constructor(private _http:HttpClient) { 
     this.headers = new HttpHeaders();
@@ -33,4 +34,9 @@ return this._http.get(this.loadPage);
   findById(ticketId): Observable<any> {
     return this._http.get(this._findById+ticketId)
   } 
+
+  // updateTicket(data): Observable<any> {
+  //   return this._http.put(this._updateTicket,data,{headers: this.headers} );
+  // }
 }
+   

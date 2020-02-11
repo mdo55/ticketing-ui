@@ -61,12 +61,12 @@ this._ticketService.getPage().subscribe(
     console.log("event triggered: "+data.ticketId);
     
      const dialogConfig =new MatDialogConfig();
-    dialogConfig.disableClose =true;
-    // dialogConfig.autoFocus=true;
-    // dialogConfig.width="60%";
+    // dialogConfig.disableClose =true;
+    dialogConfig.autoFocus=true;
+    dialogConfig.width="80%";
     // let ticketInfo: any = this.findById(data.ticketId);
    GlobalConstant.findById = data.ticketId;
-    this.dialog.open(TicketInfoDialogComponent);
+    this.dialog.open(TicketInfoDialogComponent,dialogConfig);
 
   }
 

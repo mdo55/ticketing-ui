@@ -15,7 +15,7 @@ class="close"  title="Close Modal">&times;</span> -->
               (ngSubmit)="onSubmit($event)" novalidate>
   
       <div class="container">
-        <h3 align= "center"> New Ticket </h3>
+        <h3 align= "center"> Update Ticket </h3>
   
   
           <div class="row">
@@ -68,25 +68,26 @@ class="close"  title="Close Modal">&times;</span> -->
             <label for="file"><b>Upload file:</b></label><br>
         </div>
         <div class="col-75">  
-            <!-- <input type="file"  [(ngModel)]="uploadFile" [ngModelOptions]="{standalone: true}"> -->
+    
             <input type="file"  [(ngModel)]="ticketRequest.fileName" [ngModelOptions]="{standalone: true}"
             accept="image/*" (change)="changeListener($event)">
-  
-            <div class="" *ngIf="fileName">
-              <img [src]="ticketRequest.fileBase64"  height="110" />
+        
+            <div class="" *ngIf="ticketRequest.fileBase64">
+              <img [src]="ticketRequest.fileBase64"  height="170" />
             </div>
-        </div>
+        </div> 
         </div>
         <br>
         <div class="row">
             <div style="width:62%;"><input type="reset" value="Clear"></div>
-            <div style="width:50%;"><input type="submit"  value="Save" ></div>
+            <div style="width:50%;"><input type="submit"  value="Update" ></div>
         </div>
   
   
       </div>
-  
+     
     </form>
+
   </div>
   
   <br><br><br>

@@ -6,13 +6,14 @@ import { GlobalConstant } from 'src/app/common/GlobalConstants';
 import { TicketRequest } from 'src/app/module/Ticket-Request';
 
 
+
 @Component({
   selector: 'app-ticket-info-dialog',
   templateUrl: './ticket-info-dialog.component.html',
   styleUrls: ['./ticket-info-dialog.component.css']
 })
 export class TicketInfoDialogComponent implements OnInit {
-  private ticketRequest : TRequest;
+  private ticketRequest : TicketRequest;
   constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>) { 
     this.ticketRequest = new TicketRequest();
   }

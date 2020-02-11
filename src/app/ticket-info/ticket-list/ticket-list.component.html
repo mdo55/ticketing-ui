@@ -1,9 +1,6 @@
 
 
 <div class="search-div">
-    <button mat-raised-button>
-      <mat-icon>add</mat-icon>Create
-    </button>
 
     <mat-form-field class="search-from-field" floatLabel="never">
       <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
@@ -57,16 +54,16 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <mat-footer-row *matFooterRowDef="['noData']" 
+    <!-- <mat-footer-row *matFooterRowDef="['noData']" 
       [[ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}">
 
-    </mat-footer-row>
+    </mat-footer-row> -->
   </table>
 
   <mat-paginator #paginator
       [length]="dataSource?.data.length"
       [pageIndex]="0"
       [pageSize]="5"
-      [pageSizeOptions]="[5, 10, 15, 20,30]">
+      [pageSizeOptions]="[5, 10, 15, 20,30,40,50,60]">
   </mat-paginator>
 </div>
