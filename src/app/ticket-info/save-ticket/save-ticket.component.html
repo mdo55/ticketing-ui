@@ -1,5 +1,5 @@
 <!-- Button to open the modal login form -->
- <button  (click)="displayPop($event)">Create Ticket </button>
+<button  (click)="displayPop($event)">Create Ticket </button>
 <div class="registration" *ngIf="showForm"></div>
 <!-- The Modal -->
 <div  id="id01" class="modal" >
@@ -43,7 +43,7 @@ class="close"  title="Close Modal">&times;</span>
       </div>
       <div class="col-75">
           <select  [(ngModel)]="priority" [ngModelOptions]="{standalone: true}" required>
-              <option value="LOW">LOW</option>
+              <option value="NORMAL">NORMAL</option>
               <option value="MEDIUM" selected>MEDIUM</option>
               <option value="HIGH">HIGH</option>
               <option value="SEVERE">SEVERE</option>
@@ -72,9 +72,6 @@ class="close"  title="Close Modal">&times;</span>
           <div class="" *ngIf="fileName">
             <img [src]="base64textString"  height="110" />
           </div>
-
-
-
       </div>
       </div>
 
@@ -83,16 +80,12 @@ class="close"  title="Close Modal">&times;</span>
           <div style="width:62%;"><input type="reset" value="Clear"></div>
           <div style="width:50%;"><input type="submit"  value="Save" ></div>
       </div>
-
-
     </div>
 
   </form>
 </div>
 
 <br><br><br>
-
-
 
 <script>
   // Get the modal
@@ -105,10 +98,6 @@ class="close"  title="Close Modal">&times;</span>
     }
   }
   </script>
-
-
 <div>
-
-        <app-data-table></app-data-table>
-
+        <app-ticket-list></app-ticket-list>
 </div>

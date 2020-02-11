@@ -3,16 +3,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { TicketListComponent } from '../ticket-list/ticket-list.component';
 
-import { DataTableComponent } from './data-table.component';
-
-describe('DataTableComponent', () => {
-  let component: DataTableComponent;
-  let fixture: ComponentFixture<DataTableComponent>;
+describe('TicketListComponent', () => {
+  let component: TicketListComponent;
+  let fixture: ComponentFixture<TicketListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataTableComponent ],
+      declarations: [ TicketListComponent ],
       imports: [
         NoopAnimationsModule,
         MatPaginatorModule,
@@ -23,7 +22,7 @@ describe('DataTableComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataTableComponent);
+    fixture = TestBed.createComponent(TicketListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

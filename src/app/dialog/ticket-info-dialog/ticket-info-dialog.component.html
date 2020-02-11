@@ -1,0 +1,105 @@
+<!-- Button to open the modal login form -->
+<!-- <button  (click)="displayPop($event)">Create Ticket </button> -->
+<!-- <div class="registration" *ngIf="showForm"></div> -->
+<!-- The Modal -->
+<!-- <div  id="id01" class="modal" >
+  <span onclick="document.getElementById('id01').style.display='none'"
+class="close"  title="Close Modal">&times;</span> -->
+
+
+
+<div  id="id01" class="modal" >      
+    <!-- Modal Content -->
+   <form #saveform="ngForm"
+    *ngIf="!showForm" id="save-ticket-form-id" class="modal-content animate"
+              (ngSubmit)="onSubmit($event)" novalidate>
+  
+      <div class="container">
+        <h3 align= "center"> New Ticket </h3>
+  
+  
+          <div class="row">
+        <div class="col-25">
+            <label for="ticketRequest.ticket"><b>Ticket:</b></label>&nbsp;
+        </div>
+        <div class="col-75">
+            <input type="text" placeholder="Enter ticket name" maxlength="500" [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}" required>
+        </div>
+        </div>
+  
+  
+        <div class="row">
+        <div class="col-25">
+            <label for="type"><b>Type:</b></label>&nbsp;
+        </div>
+        <div class="col-75">
+            <select  [(ngModel)]="ticketRequest.type" [ngModelOptions]="{standalone: true}" required>
+                <option value="BUG" selected>BUG</option>
+                <option value="ENHANCEMENT" >ENHANCEMENT</option>
+              </select>
+        </div>
+        </div>
+  
+      <div class="row">
+        <div class="col-25">
+            <label for="priority"><b>priority:</b></label>&nbsp;
+        </div>
+        <div class="col-75">
+            <select  [(ngModel)]="ticketRequest.priority" [ngModelOptions]="{standalone: true}" required>
+                <option value="NORMAL">NORMAL</option>
+                <option value="MEDIUM" selected>MEDIUM</option>
+                <option value="HIGH">HIGH</option>
+                <option value="SEVERE">SEVERE</option>
+              </select>
+        </div>
+        </div>
+  
+        <div class="row">
+        <div class="col-25">
+            <label for="description"><b>Description:</b></label><br>
+        </div>
+        <div class="col-75">
+            <textarea  placeholder="Add comments" maxlength="1500" [(ngModel)]="ticketRequest.description" [ngModelOptions]="{standalone: true}" rows="3" cols="30"></textarea>
+        </div>
+        </div>
+  
+        <div class="row">
+        <div class="col-25">
+            <label for="file"><b>Upload file:</b></label><br>
+        </div>
+        <div class="col-75">  
+            <!-- <input type="file"  [(ngModel)]="uploadFile" [ngModelOptions]="{standalone: true}"> -->
+            <input type="file"  [(ngModel)]="ticketRequest.fileName" [ngModelOptions]="{standalone: true}"
+            accept="image/*" (change)="changeListener($event)">
+  
+            <div class="" *ngIf="fileName">
+              <img [src]="ticketRequest.fileBase64"  height="110" />
+            </div>
+        </div>
+        </div>
+        <br>
+        <div class="row">
+            <div style="width:62%;"><input type="reset" value="Clear"></div>
+            <div style="width:50%;"><input type="submit"  value="Save" ></div>
+        </div>
+  
+  
+      </div>
+  
+    </form>
+  </div>
+  
+  <br><br><br>
+  
+  <script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>
+  

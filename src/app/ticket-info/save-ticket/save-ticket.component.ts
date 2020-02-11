@@ -1,19 +1,22 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { TicketService } from '../ticket.service';
+
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { EventEmitter } from 'events';
 import { Options } from 'selenium-webdriver/opera';
-import {GlobalConstant} from '../common/GlobalConstants';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { MatDialog , MatDialogConfig } from '@angular/material';
+import { TicketService } from 'src/app/ticket.service';
+import { GlobalConstant } from 'src/app/common/GlobalConstants';
 
 @Component({
-  selector: 'app-ticket-generation',
-  templateUrl: './ticket-generation.component.html',
-  styleUrls: ['./ticket-generation.component.css']
+  selector: 'app-save-ticket',
+  templateUrl: './save-ticket.component.html',
+  styleUrls: ['./save-ticket.component.css']
 })
-export class TicketGenerationComponent implements OnInit {
+
+export class SaveTicketComponent implements OnInit {
  showForm: boolean;
  ticket: string;
  type: string='BUG';

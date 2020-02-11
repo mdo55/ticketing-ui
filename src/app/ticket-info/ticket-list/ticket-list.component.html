@@ -57,8 +57,8 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <mat-footer-row *matFooterRowDef="['noData']" >
-      <!-- [[ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"> -->
+    <mat-footer-row *matFooterRowDef="['noData']" 
+      [[ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}">
 
     </mat-footer-row>
   </table>
@@ -70,5 +70,3 @@
       [pageSizeOptions]="[5, 10, 15, 20,30]">
   </mat-paginator>
 </div>
-
-
