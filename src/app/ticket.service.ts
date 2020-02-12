@@ -35,8 +35,8 @@ return this._http.get(this.loadPage);
     return this._http.get(this._findById+ticketId)
   } 
 
-  // updateTicket(data): Observable<any> {
-  //   return this._http.put(this._updateTicket,data,{headers: this.headers} );
-  // }
+  updateTicket(data): Observable<any> {
+    return this._http.put(this._updateTicket,data,{headers: this.headers} );
+  }
 }
    

@@ -11,7 +11,7 @@ export class TicketRequest implements TRequest {
     createdBy: string;
     updatedDate: Date;
     updatedBy: string;
-    fileBase64: string;
+    fileBase64: string | ArrayBuffer;
     fileExtension: string;
     priority: string;
     active: boolean;
@@ -31,7 +31,7 @@ interface TRequest {
     createdBy: string;
     updatedDate: Date;
     updatedBy: string;
-    fileBase64: string;
+    fileBase64: string | ArrayBuffer;
     fileExtension: string;
     priority: string;
     active: boolean;

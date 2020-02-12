@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { TicketService } from 'src/app/ticket.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogModule ,MatDialogConfig } from '@angular/material';
 import { GlobalConstant } from 'src/app/common/GlobalConstants';
-import { TicketRequest } from 'src/app/module/Ticket-Request';
-
-
+import { TicketRequest } from 'src/app/dto/ticket-request';
 
 @Component({
   selector: 'app-ticket-info-dialog',
@@ -14,31 +12,96 @@ import { TicketRequest } from 'src/app/module/Ticket-Request';
 })
 export class TicketInfoDialogComponent implements OnInit {
   private ticketRequest : TicketRequest;
-  constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>) { 
+
+  base64textString:string | ArrayBuffer;
+ isFileAttached:boolean;
+ fileName: string;
+
+  constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>, 
+    private changeDetectorRefs: ChangeDetectorRef) { 
     this.ticketRequest = new TicketRequest();
+    
   }
 
-    ngOnInit() {
-      console.log("dialog triggered")
-      this.findById(GlobalConstant.findById);
-    }
-      onSubmit(){
-        this.onClose();
+  ngOnInit() {
+    console.log("dialog triggered")
+    this.findById(GlobalConstant.findById);
+  }
+  onSubmit(){
+    this.onClose();
+  this.updateTicket();
+  }
+  
+  
+  onClose() {
+    this.dialogRef.close();
+    this.refresh();
+
+  }
+  refresh(): any {
+  
+  }
+
+  updateTicket(){
+    console.log("data added"+this.ticketRequest)
+
+ this._ticketService.updateTicket(this.ticketRequest).subscribe(
+      data=>{
+        console.log(data);
+        if(data) {
+          for(let i=0; i<GlobalConstant.dataSource.data.length; i++){
+            if(this.ticketRequest.ticketId==GlobalConstant.dataSource.data[i].ticketId){
+              GlobalConstant.dataSource.data[i]=this.ticketRequest;
+              // GlobalConstant.dataSource= new MatTableDataSource( GlobalConstant.dataSource.data);
+              // GlobalConstant.dataSource._updatePaginator(GlobalConstant.dataSource.data.length);
+              // this.changeDetectorRefs.detectChanges();
+            }
+          }
+        }
+      },
+      (error)=>{
+        console.log(error.error.message);
       }
-      onClose() {
-        this.dialogRef.close();
+    );
+  
+
+  }
+  findById(ticketId : number): void {
+    this._ticketService.findById(ticketId).subscribe(
+      data=> {
+        this.ticketRequest = data;
+        console.log(data);
+      },
+      (error)=>{
+        console.log(error.error.message);
+      });
+  }
+
+  changeListener($event) : void {
+    this.readThis($event.target);
+  }
+  
+  readThis(inputValue: any): void {
+    var file:File = inputValue.files[0];
+    var myReader:FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      // this.base64textString = myReader.result;
+      this.readFileExtension(this.fileName);
+      if(myReader.result){
+          // this.isFileAttached=true;
+          this.ticketRequest.attached=true;
+          this.ticketRequest.fileBase64=myReader.result;
       }
-
-    findById(ticketId : number): void {
-
-       this._ticketService.findById(ticketId).subscribe(
-          data=> {
-            this.ticketRequest = data;
-            console.log(data);
-          },
-          (error)=>{
-            console.log(error.error.message);
-          });
     }
-
+    if(file){
+      myReader.readAsDataURL(file);
+    }
+  }
+  readFileExtension(fileName: string) {
+    if(fileName){
+        this.ticketRequest.fileExtension=this.fileName.split(".")[1];
+        console.log(this.ticketRequest);
+    }
+  }
 }

@@ -8,7 +8,8 @@ class="close"  title="Close Modal">&times;</span> -->
 
 
 
-<div  id="id01" class="modal" >      
+<div  id="id01" class="modal" >  
+       
     <!-- Modal Content -->
    <form #saveform="ngForm"
     *ngIf="!showForm" id="save-ticket-form-id" class="modal-content animate"
@@ -69,17 +70,17 @@ class="close"  title="Close Modal">&times;</span> -->
         </div>
         <div class="col-75">  
     
-            <input type="file"  [(ngModel)]="ticketRequest.fileName" [ngModelOptions]="{standalone: true}"
+            <input type="file"  [(ngModel)]="fileName" [ngModelOptions]="{standalone: true}"
             accept="image/*" (change)="changeListener($event)">
-        
-            <div class="" *ngIf="ticketRequest.fileBase64">
+        </div> 
+            <div class="container" *ngIf="ticketRequest.fileBase64">
               <img [src]="ticketRequest.fileBase64"  height="170" />
             </div>
-        </div> 
+      
         </div>
         <br>
         <div class="row">
-            <div style="width:62%;"><input type="reset" value="Clear"></div>
+
             <div style="width:50%;"><input type="submit"  value="Update" ></div>
         </div>
   

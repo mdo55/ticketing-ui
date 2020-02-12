@@ -40,8 +40,7 @@ previewUrl:any = null;
 
   ngOnInit() {
   }
-
-
+  
   saveTicketInfo(event:any){
 
    // console.log('submitted...');

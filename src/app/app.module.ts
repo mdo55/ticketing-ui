@@ -14,7 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { TicketService } from './ticket.service';
 import {MatIconModule} from '@angular/material/icon';
 import { IconImportModule } from 'mat-icon-import';
-import { MatDialog, MatDialogModule ,MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogModule ,MatDialogConfig, MatInputModule } from '@angular/material';
 import { TicketInfoDialogComponent } from './dialog/ticket-info-dialog/ticket-info-dialog.component';
 import { TicketListComponent } from './ticket-info/ticket-list/ticket-list.component';
 import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.component';
@@ -27,7 +27,7 @@ import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.compo
     AdminComponent,
     TicketInfoDialogComponent,
     TicketListComponent,
-    SaveTicketComponent
+    SaveTicketComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +42,8 @@ import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.compo
     MatSortModule,
     IconImportModule,
     MatDialogModule,
+    MatIconModule,
+    MatInputModule,
   
   ],
   providers: [

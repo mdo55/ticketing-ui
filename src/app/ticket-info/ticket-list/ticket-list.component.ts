@@ -13,6 +13,7 @@ import { GlobalConstant } from 'src/app/common/GlobalConstants';
 import { TicketService } from 'src/app/ticket.service';
 import { TicketInfoDialogComponent } from 'src/app/dialog/ticket-info-dialog/ticket-info-dialog.component';
 import { MatDialog, MatDialogConfig } from "@angular/material";
+import { TicketRequest } from 'src/app/dto/ticket-request';
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
@@ -26,7 +27,20 @@ export class TicketListComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
    searchKey:string;
-constructor(private _ticketService:TicketService,private dialog :MatDialog){}
+   private ticketRequest : TicketRequest;
+   ticket: string;
+  type: string;
+  priority: string;
+  description:string;
+  uploadFile: File;
+   base64textString:string | ArrayBuffer;
+  fileExtension: string;
+  isFileAttached:boolean;
+  response:any;
+  fileName: string;
+  showForm: boolean;
+ 
+constructor(private _ticketService:TicketService, private dialog :MatDialog){}
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'priority'];//,'createdBy'];//, 'actions'];
@@ -34,6 +48,7 @@ constructor(private _ticketService:TicketService,private dialog :MatDialog){}
   ngOnInit() {
     // this.dataSource: DataTableDataSource<any>;
      this.getPage();
+     
   }
 
   getPage(){
@@ -69,8 +84,6 @@ this._ticketService.getPage().subscribe(
     this.dialog.open(TicketInfoDialogComponent,dialogConfig);
 
   }
-
-  
 
   onSearchClear(){
     this.searchKey="";
