@@ -1,6 +1,6 @@
 .modal {
     display: none; /* Hidden by default */
-    position:fixed; /* Stay in place */
+    position: relative; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
@@ -9,7 +9,7 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    padding-top: 60px;
+    padding-top: 40px;
   }
 
   /* Modal Content/Box */
@@ -17,8 +17,9 @@
     background-color: #fefefe;
     margin: 5px auto; /* 15% from the top and centered */
     border: 1px solid #888;
-    width: 60%; /* Could be more or less, depending on screen size */
-    height: 60%;
+    width: 70%; /* Could be more or less, depending on screen size */
+    height: 70%;
+    
   }
 
   /* The Close Button */
@@ -29,13 +30,13 @@
     top: 0;
     color: #000;
     font-size: 35px;
-    font-weight: bold;
+    /* font-weight: bold; */
   }
 
   /* Close button on hover */
   .close:hover,
   .close:focus {
-    color: red;
+    color: black;
     cursor: pointer;
   }
 
@@ -81,6 +82,7 @@
     border-radius: 4px;
     cursor: pointer;
     float: right;
+    margin-top: 15px;
   }
 
   /* Style the container */
@@ -88,21 +90,35 @@
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+    height: 100%;
+    width: 100%;  
   }
-
+  
   /* Floating column for labels: 25% width */
   .col-25 {
     float: left;
-    width: 25%;
+    width: 20%;
     margin-top: 3px;
   }
-
-  /* Floating column for inputs: 75% width */
   .col-75 {
     float: left;
-    width: 70%;
+    width: 80%;
     margin-top: 3px;
   }
+  .col-80 {
+    align-content: center;
+    float: right;
+    width: 30%;
+    margin-top: 10px; 
+  }
+  .col-10 {
+    float: left;
+    width: 80%;
+    margin-top: 3px;
+  }
+  /* Floating column for inputs: 75% width */
+  
+  
 
   /* Clear floats after the columns */
   .row:after {

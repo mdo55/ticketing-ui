@@ -11,16 +11,17 @@ import { TicketRequest } from 'src/app/dto/ticket-request';
   styleUrls: ['./ticket-info-dialog.component.css']
 })
 export class TicketInfoDialogComponent implements OnInit {
+  
   private ticketRequest : TicketRequest;
 
   base64textString:string | ArrayBuffer;
  isFileAttached:boolean;
  fileName: string;
+submitValue: string="Update";
 
   constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>, 
     private changeDetectorRefs: ChangeDetectorRef) { 
     this.ticketRequest = new TicketRequest();
-    
   }
 
   ngOnInit() {
@@ -30,6 +31,7 @@ export class TicketInfoDialogComponent implements OnInit {
   onSubmit(){
     this.onClose();
   this.updateTicket();
+  
   }
   
   
@@ -47,7 +49,7 @@ export class TicketInfoDialogComponent implements OnInit {
 
  this._ticketService.updateTicket(this.ticketRequest).subscribe(
       data=>{
-        console.log(data);
+        // console.log(data);
         if(data) {
           for(let i=0; i<GlobalConstant.dataSource.data.length; i++){
             if(this.ticketRequest.ticketId==GlobalConstant.dataSource.data[i].ticketId){
@@ -63,18 +65,32 @@ export class TicketInfoDialogComponent implements OnInit {
         console.log(error.error.message);
       }
     );
-  
 
   }
   findById(ticketId : number): void {
+    if(ticketId && this.submitValue == "Update"){
     this._ticketService.findById(ticketId).subscribe(
       data=> {
         this.ticketRequest = data;
-        console.log(data);
+        // console.log("if condition triggered");
       },
       (error)=>{
         console.log(error.error.message);
       });
+    }
+    else {
+      // console.log("else triggered")
+      this.submitValue="Save";
+      this.ticketRequest = new TicketRequest();
+     
+      // this.ticketRequest.ticket="";
+      this.ticketRequest.type="BUG";
+      this.ticketRequest.priority="NORMAL";
+      // this.ticketRequest.description="";
+      // this.isFileAttached=false;
+      // this.ticketRequest.fileBase64=null;
+    }
+  
   }
 
   changeListener($event) : void {

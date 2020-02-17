@@ -1,6 +1,6 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output} from '@angular/core';
 
-import { CheckboxControlValueAccessor } from '@angular/forms';
+import { CheckboxControlValueAccessor, FormBuilder } from '@angular/forms';
 import { EventEmitter } from 'events';
 import { Options } from 'selenium-webdriver/opera';
 
@@ -9,6 +9,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog , MatDialogConfig } from '@angular/material';
 import { TicketService } from 'src/app/ticket.service';
 import { GlobalConstant } from 'src/app/common/GlobalConstants';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-save-ticket',
@@ -16,7 +18,7 @@ import { GlobalConstant } from 'src/app/common/GlobalConstants';
   styleUrls: ['./save-ticket.component.css']
 })
 
-export class SaveTicketComponent implements OnInit {
+export class SaveTicketComponent implements OnInit{
  showForm: boolean;
  ticket: string;
  type: string='BUG';
@@ -31,25 +33,25 @@ export class SaveTicketComponent implements OnInit {
 
 previewUrl:any = null;
   @Output() closeModalEvent = new EventEmitter();
+  isShow: boolean;
 
-
-
-  constructor(private _ticketService:TicketService, private domSanitizer: DomSanitizer) {
+  constructor(private _ticketService:TicketService, private domSanitizer: DomSanitizer,
+    private router: Router, private formBuilder: FormBuilder) {
     this.showForm = false;
+    GlobalConstant.dataSource= new MatTableDataSource([]);
    }
 
   ngOnInit() {
+   this.displayPop(event);
   }
-  
+ 
   saveTicketInfo(event:any){
-
-   // console.log('submitted...');
-
     event.preventDefault();
     this.showForm = true;
-    document.getElementById('id01').style.visibility="hidden";
-    //  this.readThis(event.target);
+   
 
+    document.getElementById('id01').style.visibility="hidden";
+   
     let saveRequest: any = {
       userId: "vamsi@altimetrik.com",
       ticket: this.ticket,
@@ -68,8 +70,8 @@ previewUrl:any = null;
         this.response=data;
         if(data) {
           GlobalConstant.dataSource.data.push(data);
-          GlobalConstant.dataSource= new MatTableDataSource( GlobalConstant.dataSource.data);
-          console.log("display all"+ GlobalConstant.dataSource.data);
+          GlobalConstant.dataSource.sort = GlobalConstant.dataSource.sort;
+          GlobalConstant.dataSource.paginator = GlobalConstant.dataSource.paginator;
         }
       },
       (error)=>{
@@ -81,10 +83,13 @@ previewUrl:any = null;
     this.priority="NORMAL";
     this.description="";
     this.isFileAttached=false;
-
+    if(this.showForm){
+      return this.router.navigateByUrl('/ticket-list');
+    }
+    
   }
   changeListener($event) : void {
-
+console.log("changeListener triggered ")
     this.readThis($event.target);
   }
 
@@ -105,18 +110,15 @@ previewUrl:any = null;
           this.isFileAttached=true;
           console.log(this.base64textString);
       }
-
     }
     myReader.readAsDataURL(file);
   }
 
 displayPop(event:any)
 {
-  console.log('triggered')
   document.getElementById('id01').style.display='block';
   document.getElementById('id01').style.visibility='';
   this.showForm = false;
-
 }
 
 }

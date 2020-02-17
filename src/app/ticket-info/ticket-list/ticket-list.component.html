@@ -1,11 +1,19 @@
 
+<div>
+  <button  (click)="displayPop($event)">Create Ticket </button>
+</div>
+<div id="save-ticket-id" class="modal" >
+    <!-- <span onclick="document.getElementById('save-ticket-id').style.display='none'"
+class="close"  title="Close Modal">&times;</span>  -->
+<!-- <app-save-ticket></app-save-ticket> -->
 
+</div> 
 <div class="search-div">
 
     <mat-form-field class="search-from-field" floatLabel="never">
       <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
       <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
-        <mat-icon>Close</mat-icon>
+        <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
   </div>
@@ -71,3 +79,4 @@
       [pageSizeOptions]="[5, 10, 15, 20,30,40,50,60]">
   </mat-paginator>
 </div>
+

@@ -14,6 +14,7 @@ import { TicketService } from 'src/app/ticket.service';
 import { TicketInfoDialogComponent } from 'src/app/dialog/ticket-info-dialog/ticket-info-dialog.component';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TicketRequest } from 'src/app/dto/ticket-request';
+// import { SaveTicketComponent } from 'src/app/ticket-info/save-ticket/save-ticket.component';
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
@@ -39,6 +40,8 @@ export class TicketListComponent implements OnInit {
   response:any;
   fileName: string;
   showForm: boolean;
+  
+ 
  
 constructor(private _ticketService:TicketService, private dialog :MatDialog){}
 
@@ -47,11 +50,12 @@ constructor(private _ticketService:TicketService, private dialog :MatDialog){}
 
   ngOnInit() {
     // this.dataSource: DataTableDataSource<any>;
-     this.getPage();
+    console.log("init triggered")
+     this.getPage(event);
      
   }
-
-  getPage(){
+ 
+  getPage(event){
 
 this._ticketService.getPage().subscribe(
   data=>{
@@ -70,10 +74,8 @@ this._ticketService.getPage().subscribe(
   console.log(error.error.message);
 });
 
-
 }
   openDialog(data, event: any): void {
-    console.log("event triggered: "+data.ticketId);
     
      const dialogConfig =new MatDialogConfig();
     // dialogConfig.disableClose =true;
@@ -93,5 +95,19 @@ this._ticketService.getPage().subscribe(
   applyFilter(){
     this.dataSource.filter=this.searchKey.trim().toLowerCase();
   }
+
+  
+  displayPop(event:any)
+  {
+
+    const dialogConfig =new MatDialogConfig();
+    
+    dialogConfig.autoFocus=true;
+    dialogConfig.width="80%";
+    GlobalConstant.findById = null;
+    this.dialog.open(TicketInfoDialogComponent,dialogConfig);
+    
+  }
+  
 }
 
