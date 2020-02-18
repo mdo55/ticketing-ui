@@ -8,15 +8,53 @@ class="close"  title="Close Modal">&times;</span>  -->
 <!-- <app-save-ticket></app-save-ticket> -->
 
 </div> 
+<br><br><br>
+
+<div class ="ng-container">
 <div class="search-div">
 
     <mat-form-field class="search-from-field" floatLabel="never">
-      <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+      <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()"
+      (focus)="setupFilter('ticket')">
       <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
   </div>
+
+<!-- Filter by type -->
+<div class="search-div">
+<mat-form-field class="search-from-field" floatLable="never">
+<!-- (change) -->
+<select matNativeControl [(ngModel)]="searchType" placeholder="Filter by Type" (change)="typeFilter()" (focus)="setupFilter('type')">
+<option>All</option>
+<option value="BUG">BUG</option>
+<option value="ENHANCEMENT">ENHANCEMENT</option>
+</select>
+<!-- <button type="submit" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="typeFilter()">
+<mat-icon>search</mat-icon>
+</button> -->
+</mat-form-field>
+</div>
+
+<!-- Filter by priority -->
+<div class="search-div">
+  <mat-form-field class="search-from-field" floatLable="never">
+  <select matNativeControl [(ngModel)]="searchPriority" placeholder="Filter by Priority" (change)="priorityFilter()" (focus)="setupFilter('priority')">
+  <option>All</option>
+  <option value="NORMAL">NORMAL</option>
+  <option value="MEDIUM">MEDIUM</option>
+  <option value="HIGH">HIGH</option>
+  <option value="SEVERE">SEVERE</option>
+  </select>
+  <!-- <button type="submit" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="priorityFilter()">
+  <mat-icon>search</mat-icon>
+  </button> -->
+  </mat-form-field>
+  </div>
+  </div> 
+
+
 
 <div class="mat-elevation-z8" data-table>
 
@@ -76,7 +114,7 @@ class="close"  title="Close Modal">&times;</span>  -->
       [length]="dataSource?.data.length"
       [pageIndex]="0"
       [pageSize]="5"
-      [pageSizeOptions]="[5, 10, 15, 20,30,40,50,60]">
+      [pageSizeOptions]="[5, 10, 15, 20 , 30 ,40 ,60]">
   </mat-paginator>
 </div>
 

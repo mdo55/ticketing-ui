@@ -14,6 +14,7 @@ import { TicketService } from 'src/app/ticket.service';
 import { TicketInfoDialogComponent } from 'src/app/dialog/ticket-info-dialog/ticket-info-dialog.component';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TicketRequest } from 'src/app/dto/ticket-request';
+import { DataSourceService } from 'src/app/service/DataSourceService';
 // import { SaveTicketComponent } from 'src/app/ticket-info/save-ticket/save-ticket.component';
 @Component({
   selector: 'app-ticket-list',
@@ -40,23 +41,27 @@ export class TicketListComponent implements OnInit {
   response:any;
   fileName: string;
   showForm: boolean;
+  searchType: string;
+  searchPriority: string;
+
   
  
  
-constructor(private _ticketService:TicketService, private dialog :MatDialog){}
+constructor(private _ticketService:TicketService, private dialog :MatDialog, private _dataSourceService: DataSourceService){}
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'priority'];//,'createdBy'];//, 'actions'];
 
   ngOnInit() {
     // this.dataSource: DataTableDataSource<any>;
-    console.log("init triggered")
+    console.log("ticket list init triggered")
+    setTimeout(() => { console.log(""); }, 1000);
      this.getPage(event);
      
   }
  
   getPage(event){
-
+    console.log("ticket list init triggered after getPage ")
 this._ticketService.getPage().subscribe(
   data=>{
     let content: [] = data['content'];
@@ -87,6 +92,16 @@ this._ticketService.getPage().subscribe(
 
   }
 
+
+  setupFilter(column: string) {
+    console.log("setup filter called on "+column);
+    
+    this.dataSource.filterPredicate = (d:any, filter: string) => {
+    const textToSearch = d[column] && d[column].toLowerCase() || '';
+    return textToSearch.indexOf(filter) !== -1;
+    };
+    } 
+
   onSearchClear(){
     this.searchKey="";
     this.applyFilter();
@@ -95,6 +110,27 @@ this._ticketService.getPage().subscribe(
   applyFilter(){
     this.dataSource.filter=this.searchKey.trim().toLowerCase();
   }
+
+
+typeFilter(){
+console.log("type filter.."+this.searchType);
+if(this.searchType=="All"){
+this.searchType="";
+this.typeFilter();
+}else{
+this.dataSource.filter=this.searchType.trim().toLowerCase();
+}
+}
+
+priorityFilter(){
+console.log("priority filter.."+this.searchPriority);
+if(this.searchPriority=="All"){
+this.searchPriority="";
+this.priorityFilter();
+}else{
+this.dataSource.filter=this.searchPriority.trim().toLowerCase();
+}
+} 
 
   
   displayPop(event:any)

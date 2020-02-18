@@ -66,7 +66,7 @@ previewUrl:any = null;
 
    this._ticketService.saveTicketInfo(saveRequest).subscribe(
       data=>{
-        console.log(data);
+        // console.log(data);
         this.response=data;
         if(data) {
           GlobalConstant.dataSource.data.push(data);
@@ -108,7 +108,7 @@ console.log("changeListener triggered ")
       console.log("file extension updated "+this.fileExtension);
       if(this.base64textString){
           this.isFileAttached=true;
-          console.log(this.base64textString);
+          // console.log(this.base64textString);
       }
     }
     myReader.readAsDataURL(file);

@@ -5,10 +5,15 @@
 }
 
 .search-div{
-margin: 10px;
-}
+
+  margin: 10px;
+  width: 30%;
+  height: 10%;
+  float: left; 
+  } 
+
 .search-from-field{
-  width: 60%;
+  width: 90%;
   margin-left: 10px;
   padding: 5px 10px;
   background-color: #f5f5f5;
@@ -165,3 +170,6 @@ margin: 10px;
   .ng-invalid{
     border: 1px solid red;
   }
+
+
+  

@@ -18,6 +18,7 @@ import { MatDialog, MatDialogModule ,MatDialogConfig, MatInputModule } from '@an
 import { TicketInfoDialogComponent } from './dialog/ticket-info-dialog/ticket-info-dialog.component';
 import { TicketListComponent } from './ticket-info/ticket-list/ticket-list.component';
 import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.component';
+import { DataSourceService } from './service/DataSourceService';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.compo
   
   ],
   providers: [
-    TicketService
+    TicketService, DataSourceService
   ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],

@@ -16,15 +16,15 @@ class="close"  title="Close Modal">&times;</span> -->
               (ngSubmit)="onSubmit($event)" novalidate>
   
       <div class="container">
-        <h3 align= "center"> {{submitValue}} Ticket </h3>
-  
-  
-          <div class="row">
+        <h3 align= "center"> {{submitValue}} Ticket {{isChanged}} </h3>
+
+            <div class="row">
         <div class="col-25">
             <label for="ticketRequest.ticket"><b>Ticket:</b></label>&nbsp;
         </div>
         <div class="col-75">
-            <input type="text" placeholder="Enter ticket name" maxlength="500" [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}" required>
+            <input type="text" placeholder="Enter ticket name" maxlength="500" (keyup)="keyEvent($event)"
+             [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}" required>
         </div>
         </div>
   
@@ -34,7 +34,8 @@ class="close"  title="Close Modal">&times;</span> -->
             <label for="type"><b>Type:</b></label>&nbsp;
         </div>
         <div class="col-75">
-            <select  [(ngModel)]="ticketRequest.type" [ngModelOptions]="{standalone: true}" required>
+            <select  (keyup)="keyEvent($event)" [(ngModel)]="ticketRequest.type" 
+            [ngModelOptions]="{standalone: true}" required>
                 <option value="BUG" selected>BUG</option>
                 <option value="ENHANCEMENT" >ENHANCEMENT</option>
               </select>
@@ -46,7 +47,8 @@ class="close"  title="Close Modal">&times;</span> -->
             <label for="priority"><b>priority:</b></label>&nbsp;
         </div>
         <div class="col-75">
-            <select  [(ngModel)]="ticketRequest.priority" [ngModelOptions]="{standalone: true}" required>
+            <select  (keyup)="keyEvent($event)" [(ngModel)]="ticketRequest.priority" 
+            [ngModelOptions]="{standalone: true}" required>
                 <option value="NORMAL">NORMAL</option>
                 <option value="MEDIUM" selected>MEDIUM</option>
                 <option value="HIGH">HIGH</option>
@@ -60,7 +62,9 @@ class="close"  title="Close Modal">&times;</span> -->
             <label for="description"><b>Description:</b></label><br>
         </div>
         <div class="col-75">
-            <textarea  placeholder="Add comments" maxlength="1500" [(ngModel)]="ticketRequest.description" [ngModelOptions]="{standalone: true}" rows="3" cols="30"></textarea>
+            <textarea  placeholder="Add comments" maxlength="1500"  
+            (keyup)="keyEvent($event)" [(ngModel)]="ticketRequest.description" 
+            [ngModelOptions]="{standalone: true}" rows="3" cols="30"></textarea>
         </div>
         </div>
   
@@ -71,7 +75,7 @@ class="close"  title="Close Modal">&times;</span> -->
         </div>
         <div class="col-80">  
     
-            <input type="file"  [(ngModel)]="fileName" [ngModelOptions]="{standalone: true}"
+            <input type="file"  [(ngModel)]="fileName"  (keyup)="keyEvent($event)" [ngModelOptions]="{standalone: true}"
             accept="image/*" (change)="changeListener($event)">
         </div> 
             <div class="container" *ngIf="ticketRequest.fileBase64">
@@ -83,9 +87,11 @@ class="close"  title="Close Modal">&times;</span> -->
         <br>
         <div class="col-80">
         <div class="row">
-
-            <div style="width:50%;"><input type="submit"  [(ngModel)]="submitValue" 
-                [ngModelOptions]="{standalone: true}" ></div>
+                <div  style="width:85%;"><input class="col-0"  type="submit" value=" Cancel"></div>
+                   
+            <div style="width:50%;"><input class="col-1" id="id02" type="submit"  [(ngModel)]="submitValue" 
+                [ngModelOptions]="{standalone: true}" [disabled]="!isChanged"  ></div>
+               
         </div>
   </div>
   
