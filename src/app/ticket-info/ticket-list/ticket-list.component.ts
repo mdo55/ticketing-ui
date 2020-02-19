@@ -15,27 +15,30 @@ import { TicketInfoDialogComponent } from 'src/app/dialog/ticket-info-dialog/tic
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TicketRequest } from 'src/app/dto/ticket-request';
 import { DataSourceService } from 'src/app/service/DataSourceService';
+import { TicketDto } from 'src/app/dto/TicketDto';
 // import { SaveTicketComponent } from 'src/app/ticket-info/save-ticket/save-ticket.component';
+
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
   styleUrls: ['./ticket-list.component.css']
 })
+
 export class TicketListComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  dataSource: MatTableDataSource<any>;
+  // dataSource: MatTableDataSource<TicketDto>;
 
-   searchKey:string;
-   private ticketRequest : TicketRequest;
-   ticket: string;
+  searchKey:string;
+  private ticketRequest : TicketRequest;
+  ticket: string;
   type: string;
   priority: string;
   description:string;
   uploadFile: File;
-   base64textString:string | ArrayBuffer;
+  base64textString:string | ArrayBuffer;
   fileExtension: string;
   isFileAttached:boolean;
   response:any;
@@ -43,11 +46,11 @@ export class TicketListComponent implements OnInit {
   showForm: boolean;
   searchType: string;
   searchPriority: string;
+  data: TicketDto[];
 
-  
- 
- 
-constructor(private _ticketService:TicketService, private dialog :MatDialog, private _dataSourceService: DataSourceService){}
+
+
+  constructor(private _ticketService:TicketService, private dialog :MatDialog, private _dataSourceService: DataSourceService){}
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'priority'];//,'createdBy'];//, 'actions'];
@@ -56,51 +59,50 @@ constructor(private _ticketService:TicketService, private dialog :MatDialog, pri
     // this.dataSource: DataTableDataSource<any>;
     console.log("ticket list init triggered")
     setTimeout(() => { console.log(""); }, 1000);
-     this.getPage(event);
-     
+    this.getPage(event);
   }
- 
+
   getPage(event){
     console.log("ticket list init triggered after getPage ")
-this._ticketService.getPage().subscribe(
-  data=>{
-    let content: [] = data['content'];
-    if(content) {
-      GlobalConstant.data = content;
-      GlobalConstant.dataSource =  new MatTableDataSource(GlobalConstant.data);
+    this._ticketService.getPage().subscribe(
+    data=>{
+      let content: [] = data['content'];
+      if(content) {
+        this._dataSourceService.createDataSource(content);
+        // this.data = this._dataSourceService.data;
+        // GlobalConstant.data = content;
+        // GlobalConstant.dataSource =  new MatTableDataSource(GlobalConstant.data);
+      }
+      // this.dataSource = GlobalConstant.dataSource;
+      // this.dataSource = this._dataSourceService.dataSource();
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    },(error)=>{
+      console.log(error.error.message);
+    });
+  }
 
-    }
-    this.dataSource = GlobalConstant.dataSource;
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+  get dataSource(): MatTableDataSource<TicketDto> {
+    return this._dataSourceService.dataSource();
+  }
 
-  },
-(error)=>{
-  console.log(error.error.message);
-});
-
-}
   openDialog(data, event: any): void {
-    
-     const dialogConfig =new MatDialogConfig();
+    const dialogConfig =new MatDialogConfig();
     // dialogConfig.disableClose =true;
     dialogConfig.autoFocus=true;
     dialogConfig.width="80%";
     // let ticketInfo: any = this.findById(data.ticketId);
-   GlobalConstant.findById = data.ticketId;
+    GlobalConstant.findById = data.ticketId;
     this.dialog.open(TicketInfoDialogComponent,dialogConfig);
-
   }
-
 
   setupFilter(column: string) {
     console.log("setup filter called on "+column);
-    
     this.dataSource.filterPredicate = (d:any, filter: string) => {
-    const textToSearch = d[column] && d[column].toLowerCase() || '';
-    return textToSearch.indexOf(filter) !== -1;
+      const textToSearch = d[column] && d[column].toLowerCase() || '';
+      return textToSearch.indexOf(filter) !== -1;
     };
-    } 
+  }
 
   onSearchClear(){
     this.searchKey="";
@@ -113,37 +115,31 @@ this._ticketService.getPage().subscribe(
 
 
 typeFilter(){
-console.log("type filter.."+this.searchType);
-if(this.searchType=="All"){
-this.searchType="";
-this.typeFilter();
-}else{
-this.dataSource.filter=this.searchType.trim().toLowerCase();
-}
+  console.log("type filter.."+this.searchType);
+  if(this.searchType=="All"){
+  this.searchType="";
+  this.typeFilter();
+  }else{
+    this.dataSource.filter=this.searchType.trim().toLowerCase();
+  }
 }
 
 priorityFilter(){
-console.log("priority filter.."+this.searchPriority);
-if(this.searchPriority=="All"){
-this.searchPriority="";
-this.priorityFilter();
-}else{
-this.dataSource.filter=this.searchPriority.trim().toLowerCase();
-}
-} 
-
-  
-  displayPop(event:any)
-  {
-
-    const dialogConfig =new MatDialogConfig();
-    
-    dialogConfig.autoFocus=true;
-    dialogConfig.width="80%";
-    GlobalConstant.findById = null;
-    this.dialog.open(TicketInfoDialogComponent,dialogConfig);
-    
+  console.log("priority filter.."+this.searchPriority);
+  if(this.searchPriority=="All"){
+  this.searchPriority="";
+  this.priorityFilter();
+  }else{
+    this.dataSource.filter=this.searchPriority.trim().toLowerCase();
   }
-  
 }
 
+displayPop(event:any)
+{
+  const dialogConfig =new MatDialogConfig();
+  dialogConfig.autoFocus=true;
+  dialogConfig.width="80%";
+  GlobalConstant.findById = null;
+  this.dialog.open(TicketInfoDialogComponent,dialogConfig);
+}
+}

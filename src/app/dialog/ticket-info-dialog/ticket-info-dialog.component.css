@@ -1,4 +1,3 @@
- 
 
   /* The Close Button */
   .close {
@@ -61,6 +60,7 @@
     cursor: pointer;
     float: right;
   }
+
   /* input[value = "Cancel"] {
     background-color:#4CAF50;
     color: white;
@@ -70,6 +70,7 @@
     cursor: pointer;
     float: right;
   } */
+
   .col-1 {
     background-color: grey;
     color: white;
@@ -90,9 +91,8 @@
     float: right;
   }
 
-
   /* Style the container */
-  
+
   /* Floating column for labels: 25% width */
   .col-25 {
     float: left;
@@ -158,4 +158,4 @@
     border: 1px solid red;
   }
 
- 
+

@@ -25,6 +25,8 @@ export class DataSourceService {
 
     updateData(obj: TicketDto) {
         this.data.push(obj);
+        this.dSource.sort = this.sort;
+        this.dSource.paginator = this.paginator;
     }
 
 }
