@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { TicketService } from 'src/app/ticket.service';
-import { MatDialogRef, MatTableDataSource } from '@angular/material';
+import { MatDialogRef, MatTableDataSource, throwMatDialogContentAlreadyAttachedError, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialog, MatDialogModule ,MatDialogConfig } from '@angular/material';
 import { GlobalConstant } from 'src/app/common/GlobalConstants';
 import { TicketRequest } from 'src/app/dto/ticket-request';
@@ -11,6 +11,9 @@ import { NgStyle } from '@angular/common';
 import { identifierModuleUrl } from '@angular/compiler';
 import { DataSourceService } from 'src/app/service/DataSourceService';
 import { TicketDto } from 'src/app/dto/TicketDto';
+import { TicketInfoDataSource } from 'src/app/datasource/ticketinfo-datasource';
+// import { timingSafeEqual } from 'crypto';
+// import { MatDialog, MatDialogConfig } from "@angular/material";
 
 @Component({
   selector: 'app-ticket-info-dialog',
@@ -20,14 +23,16 @@ import { TicketDto } from 'src/app/dto/TicketDto';
 export class TicketInfoDialogComponent implements OnInit {
 
   private ticketRequest : TicketRequest;
-  private cloneRequest : any[7];
+  private cloneRequest : any[];
   base64textString:string | ArrayBuffer;
   isFileAttached:boolean;
   fileName: string;
   submitValue: string="Update";
   response: any;
   isChanged: boolean;
+  isFileChanged: boolean;
   style: any;
+
   constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>,
     private changeDetectorRefs: ChangeDetectorRef,private router: Router,
     private _dataSourceService: DataSourceService) {
@@ -45,6 +50,8 @@ export class TicketInfoDialogComponent implements OnInit {
 
   onClose() {
     this.dialogRef.close();
+
+
   }
 
   onCancel(submitValue="Cancel") {
@@ -57,8 +64,11 @@ export class TicketInfoDialogComponent implements OnInit {
     {
       this.updateTicket();
     }
-    else {
-     this.saveTicket();
+    else{
+    this.submitValue =="Save";
+    this.saveTicket();
+
+
     }
   }
   saveTicket(){
@@ -67,15 +77,17 @@ export class TicketInfoDialogComponent implements OnInit {
       data=>{
         if(data) {
           this._dataSourceService.updateData(data);
-          // GlobalConstant.dataSource.data.push(data);
-          // GlobalConstant.dataSource.sort = GlobalConstant.dataSource.sort;
-          // GlobalConstant.dataSource.paginator = GlobalConstant.dataSource.paginator;
+        //   this.router.navigateByUrl('/ticket-list', { skipLocationChange: true }).then(() => {
+        //     this.router.navigate(['/ticket-list'], {skipLocationChange: true});
+        // });
+          
         }
       },
       (error)=>{
         console.log(error.error.message);
       }
     );
+   
   }
 
   updateTicket(){
@@ -83,13 +95,18 @@ export class TicketInfoDialogComponent implements OnInit {
       data=>{
         if(data)
         {
-          for(let i=0; i<this._dataSourceService.dSource.data.length; i++)
-          {
-            if(this.ticketRequest.ticketId==this._dataSourceService.dSource.data[i].ticketId)
+          // if(data.message){
+          //   this.displayErrorMessage(data);
+          // }
+          // else{
+            for(let i=0; i<this._dataSourceService.dSource.data.length; i++)
             {
-              this._dataSourceService.dSource.data[i]=this.ticketRequest;
+              if(this.ticketRequest.ticketId==this._dataSourceService.dSource.data[i].ticketId)
+              {
+                this._dataSourceService.dSource.data[i]=this.ticketRequest;
+              }
             }
-          }
+        // }
         }
       },
       (error)=>{
@@ -97,7 +114,9 @@ export class TicketInfoDialogComponent implements OnInit {
       }
     );
   }
-
+  // displayErrorMessage(data : any){
+  // data.message;
+  // }
   findById(ticketId : number): void {
     if(ticketId && this.submitValue == "Update"){
     this._ticketService.findById(ticketId).subscribe(
@@ -115,8 +134,9 @@ export class TicketInfoDialogComponent implements OnInit {
         console.log(error.error.message);
       });
     }
-    else {
-      this.submitValue="New";
+    
+    else  {
+      this.submitValue="Save";
       this.ticketRequest = new TicketRequest();
       this.ticketRequest.type="BUG";
       this.ticketRequest.priority="NORMAL";
@@ -126,6 +146,8 @@ export class TicketInfoDialogComponent implements OnInit {
   changeListener($event) : void
   {
     this.readThis($event.target);
+    this.isChanged =true;
+    document.getElementById("id02").style.backgroundColor=' #E15D29';
   }
 
   readThis(inputValue: any): void
@@ -155,31 +177,43 @@ export class TicketInfoDialogComponent implements OnInit {
   keyEvent(event){
     // console.log("clone"+this.cloneRequest[0].ticket)
     // console.log("original"+this.ticketRequest.ticket)
-
+  
     if(this.submitValue == "Update")
-    {
-      console.log("key triggered")
+   {
+      // console.log("key triggered")
       let desc = this.cloneRequest[0].description;
       let tiket = this.cloneRequest[0].ticket;
-      if((desc ==  this.ticketRequest.description) && (tiket == this.ticketRequest.ticket))
+      let types = this.cloneRequest[0].type;
+      let prio = this.cloneRequest[0].priority;
+      // let types = this.cloneRequest[0].type;
+  
+      // document.getElementById("id02").style.backgroundColor='grey';
+      // console.log("ticket----"+this.ticketRequest.ticket)
+      
+      if((desc ==  this.ticketRequest.description) && (tiket == this.ticketRequest.ticket) 
+      && (types == this.ticketRequest.type) && (prio == this.ticketRequest.priority))
       {
         this.isChanged= false;
         document.getElementById("id02").style.backgroundColor='grey';
-        console.log("clone----"+this.ticketRequest.ticket)
-        console.log("original----"+this.ticketRequest.description)
       }
       else
       {
-        console.log("else triggered")
         this.isChanged = true;
-        document.getElementById("id02").style.backgroundColor=' #4CAF50';
+        document.getElementById("id02").style.backgroundColor=' #E15D29';
+      }
+      if((this.ticketRequest.ticket== '') || (this.ticketRequest.description == '')){
+        this.isChanged = false;
+        document.getElementById("id02").style.backgroundColor='grey';
+
       }
     }
-    else
-    {
-      this.isChanged = false;
-      document.getElementById("id02").style.backgroundColor='grey';
+  
+   else if (this.submitValue=="Save") {
+     this.isChanged=false;
+    document.getElementById("id02").style["background-color"]="#E15D29";
+      
     }
+  
   }
 
 }

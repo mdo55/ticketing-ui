@@ -52,7 +52,7 @@
 
   /* Style the submit button */
   input[type=reset] {
-    background-color: #4CAF50;
+    background-color: #E15D29;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -60,8 +60,10 @@
     cursor: pointer;
     float: right;
   }
+  
+  
 
-  /* input[value = "Cancel"] {
+  /* input[type= submit] {
     background-color:#4CAF50;
     color: white;
     padding: 12px 20px;
@@ -82,7 +84,7 @@
   }
 
   .col-0 {
-    background-color: #4CAF50;
+    background-color: #E15D29;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -157,5 +159,7 @@
   .ng-invalid{
     border: 1px solid red;
   }
+
+  
 
 

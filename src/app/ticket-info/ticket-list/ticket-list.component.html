@@ -1,6 +1,6 @@
 
 <div>
-  <button  (click)="displayPop($event)">Create Ticket </button>
+  <button class="material-icons" (click)="displayPop($event)"> add </button>
 </div>
 <div id="save-ticket-id" class="modal" >
     <!-- <span onclick="document.getElementById('save-ticket-id').style.display='none'"
@@ -63,7 +63,7 @@ class="close"  title="Close Modal">&times;</span>  -->
 
     <ng-container matColumnDef="ticketId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>TicketID</th>
-      <td mat-cell *matCellDef="let row"><u><a (click)="openDialog(row, $event)" >{{row.ticketId}}</a></u>
+      <td class="matId" mat-cell *matCellDef="let row"><u><a (click)="openDialog(row, $event)" >{{row.ticketId}}</a></u>
       </td>
     </ng-container>
 

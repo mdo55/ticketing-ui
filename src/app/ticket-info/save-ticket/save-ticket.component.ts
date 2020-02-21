@@ -1,5 +1,4 @@
 import { Component, OnInit, Output} from '@angular/core';
-
 import { CheckboxControlValueAccessor, FormBuilder } from '@angular/forms';
 import { EventEmitter } from 'events';
 import { Options } from 'selenium-webdriver/opera';

@@ -1,6 +1,7 @@
 import { Injectable, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { TicketDto } from '../dto/TicketDto';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class DataSourceService {
@@ -15,8 +16,8 @@ export class DataSourceService {
     createDataSource(_data: TicketDto[]): void {
         this.data = _data;
         this.dSource = new MatTableDataSource(this.data);
-        this.dSource.sort = this.sort;
-        this.dSource.paginator = this.paginator;
+        // this.dSource.sort = this.sort;
+        // this.dSource.paginator = this.paginator;
     }
 
     dataSource(): MatTableDataSource<TicketDto> {
@@ -27,6 +28,7 @@ export class DataSourceService {
         this.data.push(obj);
         this.dSource.sort = this.sort;
         this.dSource.paginator = this.paginator;
+        
     }
 
 }

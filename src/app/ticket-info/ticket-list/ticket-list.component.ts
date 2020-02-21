@@ -16,6 +16,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TicketRequest } from 'src/app/dto/ticket-request';
 import { DataSourceService } from 'src/app/service/DataSourceService';
 import { TicketDto } from 'src/app/dto/TicketDto';
+import { SaveTicketDialogComponent } from 'src/app/dialog/save-ticket-dialog/save-ticket-dialog.component';
 // import { SaveTicketComponent } from 'src/app/ticket-info/save-ticket/save-ticket.component';
 
 @Component({
@@ -58,10 +59,15 @@ export class TicketListComponent implements OnInit {
   ngOnInit() {
     // this.dataSource: DataTableDataSource<any>;
     console.log("ticket list init triggered")
-    setTimeout(() => { console.log(""); }, 1000);
+    // setTimeout(() => { console.log("lsjdj"); }, 1000);
     this.getPage(event);
   }
-
+  ngAfterViewInit(){
+    console.log("after view init triggered");
+  }
+  // ngOnDestroy() {
+  //   console.log("ngOnDestroy triggered")
+  // }
   getPage(event){
     console.log("ticket list init triggered after getPage ")
     this._ticketService.getPage().subscribe(
@@ -124,7 +130,7 @@ typeFilter(){
   }
 }
 
-priorityFilter(){
+priorityFilter(){   
   console.log("priority filter.."+this.searchPriority);
   if(this.searchPriority=="All"){
   this.searchPriority="";
@@ -137,9 +143,10 @@ priorityFilter(){
 displayPop(event:any)
 {
   const dialogConfig =new MatDialogConfig();
+  // dialogConfig.disableClose = true;
   dialogConfig.autoFocus=true;
   dialogConfig.width="80%";
-  GlobalConstant.findById = null;
-  this.dialog.open(TicketInfoDialogComponent,dialogConfig);
+  GlobalConstant.findById = null;   
+  this.dialog.open(SaveTicketDialogComponent,dialogConfig);
 }
 }

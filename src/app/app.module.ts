@@ -19,6 +19,7 @@ import { TicketInfoDialogComponent } from './dialog/ticket-info-dialog/ticket-in
 import { TicketListComponent } from './ticket-info/ticket-list/ticket-list.component';
 import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.component';
 import { DataSourceService } from './service/DataSourceService';
+import { SaveTicketDialogComponent } from './dialog/save-ticket-dialog/save-ticket-dialog.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { DataSourceService } from './service/DataSourceService';
     TicketInfoDialogComponent,
     TicketListComponent,
     SaveTicketComponent,
+    SaveTicketDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,7 @@ import { DataSourceService } from './service/DataSourceService';
   ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents:[TicketInfoDialogComponent]
+  entryComponents:[TicketInfoDialogComponent,SaveTicketDialogComponent]
 })
 export class AppModule { }
 
