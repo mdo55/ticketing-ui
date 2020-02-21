@@ -20,6 +20,7 @@ import { TicketListComponent } from './ticket-info/ticket-list/ticket-list.compo
 import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.component';
 import { DataSourceService } from './service/DataSourceService';
 import { SaveTicketDialogComponent } from './dialog/save-ticket-dialog/save-ticket-dialog.component';
+import { DragdropDirective } from './dialog/save-ticket-dialog/dragdrop.directive';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { SaveTicketDialogComponent } from './dialog/save-ticket-dialog/save-tick
     TicketListComponent,
     SaveTicketComponent,
     SaveTicketDialogComponent,
+    DragdropDirective,
   ],
   imports: [
     BrowserModule,

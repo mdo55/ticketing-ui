@@ -2,10 +2,10 @@
 <!-- <button  (click)="displayPop($event)">Create Ticket </button> -->
 <!-- <div class="registration" *ngIf="showForm"></div> -->
 <!-- The Modal -->
-<!-- <div  id="id01" class="modal" >
+ <!-- <div  id="id01" class="modal" >
   <span onclick="document.getElementById('id01').style.display='none'"
-class="close"  title="Close Modal">&times;</span> -->
-
+class="close"  title="Close Modal">&times;</span>
+ </div> -->
 
 
 <div  id="id01" class="modal" >
@@ -13,7 +13,7 @@ class="close"  title="Close Modal">&times;</span> -->
     <!-- Modal Content -->
    <form #saveform="ngForm"
     *ngIf="!showForm" id="save-ticket-form-id" class="modal-content animate"
-              (ngSubmit)="onSubmit($event)" novalidate>
+              (ngSubmit)="onSubmit($event)" >
 
      <div class="container">
         <h3 align= "center"> {{submitValue}} Ticket  </h3>

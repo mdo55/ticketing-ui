@@ -80,14 +80,14 @@ export class TicketInfoDialogComponent implements OnInit {
         //   this.router.navigateByUrl('/ticket-list', { skipLocationChange: true }).then(() => {
         //     this.router.navigate(['/ticket-list'], {skipLocationChange: true});
         // });
-          
+
         }
       },
       (error)=>{
         console.log(error.error.message);
       }
     );
-   
+
   }
 
   updateTicket(){
@@ -134,7 +134,7 @@ export class TicketInfoDialogComponent implements OnInit {
         console.log(error.error.message);
       });
     }
-    
+
     else  {
       this.submitValue="Save";
       this.ticketRequest = new TicketRequest();
@@ -142,6 +142,8 @@ export class TicketInfoDialogComponent implements OnInit {
       this.ticketRequest.priority="NORMAL";
     }
   }
+
+
 
   changeListener($event) : void
   {
@@ -167,6 +169,8 @@ export class TicketInfoDialogComponent implements OnInit {
     }
   }
 
+
+
   readFileExtension(fileName: string) {
     if(fileName){
         this.ticketRequest.fileExtension=this.fileName.split(".")[1];
@@ -177,7 +181,7 @@ export class TicketInfoDialogComponent implements OnInit {
   keyEvent(event){
     // console.log("clone"+this.cloneRequest[0].ticket)
     // console.log("original"+this.ticketRequest.ticket)
-  
+
     if(this.submitValue == "Update")
    {
       // console.log("key triggered")
@@ -186,11 +190,11 @@ export class TicketInfoDialogComponent implements OnInit {
       let types = this.cloneRequest[0].type;
       let prio = this.cloneRequest[0].priority;
       // let types = this.cloneRequest[0].type;
-  
+
       // document.getElementById("id02").style.backgroundColor='grey';
       // console.log("ticket----"+this.ticketRequest.ticket)
-      
-      if((desc ==  this.ticketRequest.description) && (tiket == this.ticketRequest.ticket) 
+
+      if((desc ==  this.ticketRequest.description) && (tiket == this.ticketRequest.ticket)
       && (types == this.ticketRequest.type) && (prio == this.ticketRequest.priority))
       {
         this.isChanged= false;
@@ -207,13 +211,13 @@ export class TicketInfoDialogComponent implements OnInit {
 
       }
     }
-  
+
    else if (this.submitValue=="Save") {
      this.isChanged=false;
     document.getElementById("id02").style["background-color"]="#E15D29";
-      
+
     }
-  
+
   }
 
 }

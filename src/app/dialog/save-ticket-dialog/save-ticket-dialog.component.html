@@ -1,0 +1,114 @@
+<div class="container">
+  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <form #saveform="ngForm" id="save-ticket-form-id" class="modal-content animate"
+    (ngSubmit)="onSubmit()">
+
+        <div class="form-group row">
+          <div class="col-25">
+              <label for="ticket"><b>Ticket:</b></label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="ticket" name="ticket"
+                  class="form-control" #ticket="ngModel"
+                  [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}"
+                  maxlength="500" minlength="5" required>
+
+            <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 5 to 500 characters!</span>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-25">
+            <label for="type"><b>Type:</b></label>
+          </div>
+          <div class="col-75">
+              <select id="type" name="type"
+                      class="form-control" #ty="ngModel"
+                      [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
+                      required>
+
+                  <!-- <option value=""></option> -->
+                  <option value="BUG" selected>BUG</option>
+                  <option value="ENHANCEMENT" >ENHANCEMENT</option>
+              </select><!-- {{type.value}} -->
+              <br><span class="help-block" style="color:red;" *ngIf="!ty.valid && ty.touched">Please select type of ticket!</span>
+          </div>
+        </div>
+
+      <div class="form-group row">
+        <div class="col-25">
+          <label for="priority"><b>Priority:</b></label>
+        </div>
+        <div class="col-75">
+            <select id="priority" name="priority"
+                    class="form-control" #prio="ngModel"
+                    [(ngModel)]="priority"  [ngModelOptions]="{standalone: true}"
+                    required>
+
+                <option value="NORMAL">NORMAL</option>
+                <option value="MEDIUM" selected>MEDIUM</option>
+                <option value="HIGH">HIGH</option>
+                <option value="SEVERE">SEVERE</option>
+             </select> <!-- {{prio.value}} -->
+             <br><span class="help-block" style="color:red;" *ngIf="!prio.valid && prio.touched">Please select type of ticket!</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-25">
+          <label for="description"><b>Description:</b></label>
+        </div>
+        <div class="col-75">
+          <textarea  id="description" name="description"
+                    placeholder="Add comments" maxlength="1500"
+                    class="form-control"  #desc="ngModel"
+                    [(ngModel)]="ticketRequest.description" [ngModelOptions]="{standalone: true}"
+                    rows="3" cols="30" required>
+          </textarea>
+          <br><span class="help-block" style="color:red;" *ngIf="!desc.valid && desc.touched">Please enter description!</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-25">
+          <label for="file"><b>Upload file:</b></label>
+        </div>
+        <div class="col-75">
+          <div class="uploadfilecontainer" (click)="fileInput.click()" appDragdrop (onFileDropped)="uploadFile($event)">
+
+            <input type="file" id="fileUpload" name="fileUpload"
+                     class="form-control" #fileInput hidden
+                     [(ngModel)]="fileName"  [ngModelOptions]="{standalone: true}"
+                     accept="image/*"  (change)="uploadFile($event.target.files)">
+              <h5 align="center">Click here to upload or Drag here</h5>
+              <!-- <span class="help-block" *ngIf="fileInput.touched && isFileUpload">file uploaded</span> -->
+
+            <div class="showFile" *ngIf="isFileUpload">
+                <div class="container" >
+                  <img [src]="base64textString"  height="130" />
+                </div>
+            </div>
+          </div>
+
+            <div  class="files-list" *ngIf="isFileUpload">
+              <!-- *ngFor="let file of files;let i= index"> -->
+                <p> {{ file }} </p>
+                <button class="delete-file" (click)="deleteAttachment(0)">
+                  <i class="material-icons" style="color:red;">delete</i>
+                </button>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-25">
+          <button class="btn btn-primary" type="submit" [disabled]="!saveform.valid">Submit</button>
+        </div>
+        <div class="col-25">
+          <button class="btn btn-primary" type="reset" >Cancel</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
