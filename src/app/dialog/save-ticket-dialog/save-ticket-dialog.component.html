@@ -11,9 +11,9 @@
             <input type="text" id="ticket" name="ticket"
                   class="form-control" #ticket="ngModel"
                   [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}"
-                  maxlength="500" minlength="5" required>
+                  maxlength="500" minlength="3" required>
 
-            <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 5 to 500 characters!</span>
+            <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 3 to 500 characters!</span>
           </div>
         </div>
 
@@ -30,7 +30,7 @@
                   <!-- <option value=""></option> -->
                   <option value="BUG" selected>BUG</option>
                   <option value="ENHANCEMENT" >ENHANCEMENT</option>
-              </select><!-- {{type.value}} -->
+              </select>{{ty.value}}
               <br><span class="help-block" style="color:red;" *ngIf="!ty.valid && ty.touched">Please select type of ticket!</span>
           </div>
         </div>
@@ -49,7 +49,7 @@
                 <option value="MEDIUM" selected>MEDIUM</option>
                 <option value="HIGH">HIGH</option>
                 <option value="SEVERE">SEVERE</option>
-             </select> <!-- {{prio.value}} -->
+             </select> {{prio.value}}
              <br><span class="help-block" style="color:red;" *ngIf="!prio.valid && prio.touched">Please select type of ticket!</span>
         </div>
       </div>
@@ -80,12 +80,12 @@
                      class="form-control" #fileInput hidden
                      [(ngModel)]="fileName"  [ngModelOptions]="{standalone: true}"
                      accept="image/*"  (change)="uploadFile($event.target.files)">
-              <h5 align="center">Click here to upload or Drag here</h5>
+              <h5 align="center" *ngIf="!isFileUpload">Click here to upload or Drag here</h5>
               <!-- <span class="help-block" *ngIf="fileInput.touched && isFileUpload">file uploaded</span> -->
 
             <div class="showFile" *ngIf="isFileUpload">
-                <div class="container" >
-                  <img [src]="base64textString"  height="130" />
+                <div class="container" align="center" style="height:100%; width:100%;" >
+                  <img [src]="base64textString" width="90%" height="180px"/>
                 </div>
             </div>
           </div>
@@ -101,13 +101,13 @@
       </div>
 
       <div class="row">
-        <div class="col-25">
+        <div class="col-25"></div>
+        <div class="col-25-button">
           <button class="btn btn-primary" type="submit" [disabled]="!saveform.valid">Submit</button>
         </div>
-        <div class="col-25">
+        <div class="col-25-button">
           <button class="btn btn-primary" type="reset" >Cancel</button>
         </div>
-
       </div>
     </form>
   </div>
