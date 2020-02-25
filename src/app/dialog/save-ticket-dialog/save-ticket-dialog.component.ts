@@ -17,7 +17,7 @@ export class SaveTicketDialogComponent implements OnInit {
   showForm: boolean;
   ticket: string;
   type: string = 'BUG';
-  priority: string = 'MEDIUM';
+  priority: string = 'NORMAL';
   description: string;
   base64textString: string | ArrayBuffer;
   fileExtension: string;
@@ -52,6 +52,9 @@ export class SaveTicketDialogComponent implements OnInit {
 
   saveTicket() {
     this.ticketRequest.userId = "vamsi@altimetrik.com";
+    this.ticketRequest.type = this.type;
+ 	 	this.ticketRequest.priority=this.priority;
+
     this._ticketService.saveTicketInfo(this.ticketRequest).subscribe(
       data => {
         if (data) {
