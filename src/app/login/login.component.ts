@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.login(this.loginForm.value);
-    this.router.navigateByUrl('/save-ticket');
+    // this.router.navigateByUrl('/save-ticket');
+    this.router.navigate(['/save-ticket', { externalUrl: "ksambhe@altimetrik.com" }]);
   }
 
   

@@ -1,19 +1,13 @@
-import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Inject} from '@angular/core';
 import { TicketService } from 'src/app/ticket.service';
-import { MatDialogRef, MatTableDataSource, throwMatDialogContentAlreadyAttachedError, MAT_DIALOG_DATA } from '@angular/material';
-import { MatDialog, MatDialogModule ,MatDialogConfig } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { GlobalConstant } from 'src/app/common/GlobalConstants';
 import { TicketRequest } from 'src/app/dto/ticket-request';
-import { Route, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { style } from '@angular/animations';
-import { NgStyle } from '@angular/common';
-import { identifierModuleUrl } from '@angular/compiler';
+import { Router } from '@angular/router';
 import { DataSourceService } from 'src/app/service/DataSourceService';
-import { TicketDto } from 'src/app/dto/TicketDto';
-import { TicketInfoDataSource } from 'src/app/datasource/ticketinfo-datasource';
-// import { timingSafeEqual } from 'crypto';
-// import { MatDialog, MatDialogConfig } from "@angular/material";
+import { AlertdialogComponent } from '../alertdialog/alertdialog.component';
+
 
 @Component({
   selector: 'app-ticket-info-dialog',
@@ -34,9 +28,10 @@ export class TicketInfoDialogComponent implements OnInit {
   style: any;
 
   constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>,
-    private changeDetectorRefs: ChangeDetectorRef,private router: Router,
-    private _dataSourceService: DataSourceService) {
+    private dialog :MatDialog,
+    private _dataSourceService: DataSourceService,@Inject(MAT_DIALOG_DATA) public data:any) {
     this.ticketRequest = new TicketRequest();
+    
   }
 
   ngOnInit() {
@@ -46,15 +41,21 @@ export class TicketInfoDialogComponent implements OnInit {
   onSubmit(){
     this.onClose();
     this.saveOrUpdateTicket();
+
+    } 
+  displayErrorMessage(data : any){
+    //  this.openAlertDialog.open(event);
+    //  data.message;
+      // console.log(data.message);
+      // this.openAlertDialog(data);
   }
 
   onClose() {
     this.dialogRef.close();
-
-
+    
   }
 
-  onCancel(submitValue="Cancel") {
+  onCancel() {
     this.dialogRef.close();
   }
 
@@ -67,8 +68,6 @@ export class TicketInfoDialogComponent implements OnInit {
     else{
     this.submitValue =="Save";
     this.saveTicket();
-
-
     }
   }
   saveTicket(){
@@ -95,10 +94,15 @@ export class TicketInfoDialogComponent implements OnInit {
       data=>{
         if(data)
         {
-          // if(data.message){
-          //   this.displayErrorMessage(data);
-          // }
-          // else{
+  
+          if(data.message){
+            console.log("update functionality called....");
+            this.data = data;
+            // this.displayErrorMessage(data);
+            console.log("------"+this.data.message);
+            this.openAlertDialog(this.data);
+          }
+          else{
             for(let i=0; i<this._dataSourceService.dSource.data.length; i++)
             {
               if(this.ticketRequest.ticketId==this._dataSourceService.dSource.data[i].ticketId)
@@ -106,7 +110,7 @@ export class TicketInfoDialogComponent implements OnInit {
                 this._dataSourceService.dSource.data[i]=this.ticketRequest;
               }
             }
-        // }
+        }
         }
       },
       (error)=>{
@@ -114,15 +118,13 @@ export class TicketInfoDialogComponent implements OnInit {
       }
     );
   }
-  // displayErrorMessage(data : any){
-  // data.message;
-  // }
+ 
   findById(ticketId : number): void {
     if(ticketId && this.submitValue == "Update"){
     this._ticketService.findById(ticketId).subscribe(
       data=> {
         this.ticketRequest = data;
-        this.cloneRequest = this._dataSourceService.data.filter((value,index,arr) =>{
+        this.cloneRequest = this._dataSourceService.data.filter((value) =>{
           if(value.ticketId == ticketId){
             return value;
           }
@@ -157,11 +159,11 @@ export class TicketInfoDialogComponent implements OnInit {
     var file:File = inputValue.files[0];
     var myReader:FileReader = new FileReader();
 
-    myReader.onloadend = (e) => {
+    myReader.onloadend = () => {
       this.readFileExtension(this.fileName);
-      if(myReader.result){
-          this.ticketRequest.attached=true;
-          this.ticketRequest.fileBase64=myReader.result;
+      if (myReader.result) {
+        this.ticketRequest.attached = true;
+        this.ticketRequest.fileBase64 = myReader.result;
       }
     }
     if(file){
@@ -178,7 +180,7 @@ export class TicketInfoDialogComponent implements OnInit {
     }
   }
 
-  keyEvent(event){
+  keyEvent(){
     // console.log("clone"+this.cloneRequest[0].ticket)
     // console.log("original"+this.ticketRequest.ticket)
 
@@ -215,9 +217,20 @@ export class TicketInfoDialogComponent implements OnInit {
    else if (this.submitValue=="Save") {
      this.isChanged=false;
     document.getElementById("id02").style["background-color"]="#E15D29";
-
     }
 
   }
+  
+  openAlertDialog(data): void {
+    const dialogConfig =new MatDialogConfig();
+    dialogConfig.disableClose =true;
+    dialogConfig.autoFocus=true;
+    dialogConfig.width="80%";
+    // let ticketInfo: any = this.findById(data.ticketId);
+    dialogConfig.data = data;
+    // this.displayErrorMessage(data);
+    this.dialog.open(AlertdialogComponent,dialogConfig);
+    }
+
 
 }

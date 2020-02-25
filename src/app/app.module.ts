@@ -21,6 +21,8 @@ import { SaveTicketComponent } from './ticket-info/save-ticket/save-ticket.compo
 import { DataSourceService } from './service/DataSourceService';
 import { SaveTicketDialogComponent } from './dialog/save-ticket-dialog/save-ticket-dialog.component';
 import { DragdropDirective } from './dialog/save-ticket-dialog/dragdrop.directive';
+import { AlertdialogComponent } from './dialog/alertdialog/alertdialog.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { DragdropDirective } from './dialog/save-ticket-dialog/dragdrop.directiv
     SaveTicketComponent,
     SaveTicketDialogComponent,
     DragdropDirective,
+    AlertdialogComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +60,7 @@ import { DragdropDirective } from './dialog/save-ticket-dialog/dragdrop.directiv
   ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents:[TicketInfoDialogComponent,SaveTicketDialogComponent]
+  entryComponents:[TicketInfoDialogComponent,SaveTicketDialogComponent,AlertdialogComponent]
 })
 export class AppModule { }
 

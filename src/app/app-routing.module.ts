@@ -10,7 +10,7 @@ import { TicketListComponent } from './ticket-info/ticket-list/ticket-list.compo
 import { SaveTicketDialogComponent } from './dialog/save-ticket-dialog/save-ticket-dialog.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login'},
-  { path: 'login', component: LoginComponent },
+  { path: 'login' , component: LoginComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
    { path: 'save-ticket', component: SaveTicketComponent  },
    { path: 'ticket-list', component: TicketListComponent  },

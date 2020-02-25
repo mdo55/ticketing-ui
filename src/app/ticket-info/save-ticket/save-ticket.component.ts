@@ -8,7 +8,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog , MatDialogConfig } from '@angular/material';
 import { TicketService } from 'src/app/ticket.service';
 import { GlobalConstant } from 'src/app/common/GlobalConstants';
-import { Router } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class SaveTicketComponent implements OnInit{
  isFileAttached:boolean;
  response:any;
  fileName: string;
-
+ extractedUrl: string;
 previewUrl:any = null;
   @Output() closeModalEvent = new EventEmitter();
   isShow: boolean;
@@ -41,6 +42,10 @@ previewUrl:any = null;
    }
 
   ngOnInit() {
+    // Router.getCurrentNavigation().extras.state
+    // this.extractedUrl = 
+    // this.extractedUrl = this.router.getCurrentNavigation().extras.state;
+    // console.log(this.router.;
    this.displayPop(event);
   }
  
