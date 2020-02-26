@@ -28,7 +28,7 @@ export class DataSourceService {
         this.data.push(obj);
         this.dSource.sort = this.sort;
         this.dSource.paginator = this.paginator;
-        
+
     }
 
 }

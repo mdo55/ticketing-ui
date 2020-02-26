@@ -60,7 +60,6 @@ previewUrl:any = null;
       userId: "vamsi@altimetrik.com",
       ticket: this.ticket,
       description: this.description,
-
       attached: this.isFileAttached,
       type: this.type,
       priority: this.priority,

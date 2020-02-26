@@ -54,7 +54,7 @@ export class TicketListComponent implements OnInit {
   constructor(private _ticketService:TicketService, private dialog :MatDialog, private _dataSourceService: DataSourceService){}
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'priority'];//,'createdBy'];//, 'actions'];
+  displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'status', 'priority'];//,'createdBy'];//, 'actions'];
 
   ngOnInit() {
     // this.dataSource: DataTableDataSource<any>;

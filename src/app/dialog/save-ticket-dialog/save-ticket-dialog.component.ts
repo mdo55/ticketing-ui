@@ -52,17 +52,12 @@ export class SaveTicketDialogComponent implements OnInit {
 
   saveTicket() {
     this.ticketRequest.userId = "vamsi@altimetrik.com";
-    this.ticketRequest.type = this.type;
- 	 	this.ticketRequest.priority=this.priority;
-
+    this.ticketRequest.type = this.type;
+    this.ticketRequest.priority=this.priority;
     this._ticketService.saveTicketInfo(this.ticketRequest).subscribe(
       data => {
         if (data) {
           this._dataSourceService.updateData(data);
-          //   this.router.navigateByUrl('/ticket-list', { skipLocationChange: true }).then(() => {
-          //     this.router.navigate(['/ticket-list'], {skipLocationChange: true});
-          // });
-
         }
       },
       (error) => {
