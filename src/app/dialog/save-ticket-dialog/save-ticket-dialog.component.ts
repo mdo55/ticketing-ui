@@ -17,7 +17,8 @@ export class SaveTicketDialogComponent implements OnInit {
   showForm: boolean;
   ticket: string;
   type: string = 'BUG';
-  priority: string = 'NORMAL';
+  priority: string = 'LOW';
+  severity: string = 'LOW';
   description: string;
   base64textString: string | ArrayBuffer;
   fileExtension: string;
@@ -97,12 +98,6 @@ export class SaveTicketDialogComponent implements OnInit {
     }
     myReader.readAsDataURL(file);
 
-  }
-
-  displayPop(event: any) {
-    document.getElementById('id01').style.display = 'block';
-    document.getElementById('id01').style.visibility = '';
-    this.showForm = false;
   }
 
   uploadFile(event) {

@@ -5,56 +5,17 @@
 
         <div class="form-group row">
           <div class="col-25">
-              <label for="ticket"><b>Ticket:</b></label>
+              <label for="ticket"><b>Summary:</b></label>
           </div>
           <div class="col-75">
             <input type="text" id="ticket" name="ticket"
                   class="form-control" #ticket="ngModel"
                   [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}"
-                  maxlength="500" minlength="3" required>
+                  maxlength="500" minlength="3" placeholder="Enter ticket summary" required>
 
             <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 3 to 500 characters!</span>
           </div>
         </div>
-
-        <div class="form-group row">
-          <div class="col-25">
-            <label for="type"><b>Type:</b></label>
-          </div>
-          <div class="col-75">
-              <select id="type" name="type"
-                      class="form-control" #ty="ngModel"
-                      [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
-                      required>
-
-                  <!-- <option value=""></option> -->
-                  <option value="BUG" selected>BUG</option>
-                  <option value="ENHANCEMENT" >ENHANCEMENT</option>
-              </select>
-              <!-- {{ty.value}} -->
-              <br><span class="help-block" style="color:red;" *ngIf="!ty.valid && ty.touched">Please select type of ticket!</span>
-          </div>
-        </div>
-
-      <div class="form-group row">
-        <div class="col-25">
-          <label for="priority"><b>Priority:</b></label>
-        </div>
-        <div class="col-75">
-            <select id="priority" name="priority"
-                    class="form-control" #prio="ngModel"
-                    [(ngModel)]="priority"  [ngModelOptions]="{standalone: true}"
-                    required>
-
-                <option value="NORMAL">NORMAL</option>
-                <option value="MEDIUM" selected>MEDIUM</option>
-                <option value="HIGH">HIGH</option>
-                <option value="SEVERE">SEVERE</option>
-             </select>
-             <!-- {{prio.value}} -->
-             <br><span class="help-block" style="color:red;" *ngIf="!prio.valid && prio.touched">Please select type of ticket!</span>
-        </div>
-      </div>
 
       <div class="form-group row">
         <div class="col-25">
@@ -67,13 +28,64 @@
                     [(ngModel)]="ticketRequest.description" [ngModelOptions]="{standalone: true}"
                     rows="3" cols="30" required>
           </textarea>
-          <br><span class="help-block" style="color:red;" *ngIf="!desc.valid && desc.touched">Please enter description!</span>
+          <br><span class="help-block" style="color:red;" *ngIf="!desc.valid && desc.touched">Enter description of the ticket!</span>
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-25">
-          <label for="file"><b>Upload file:</b></label>
+          <label for="IssueType"><b>Issue Type:</b></label>
+        </div>
+        <div class="col-25">
+            <select id="type" name="type"
+                    class="form-control" #ty="ngModel"
+                    [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
+                    required>
+
+                <option value="BUG" selected>BUG</option>
+                <option value="NewFeature" >New Feature</option>
+            </select>
+            <br><span class="help-block" style="color:red;" *ngIf="!ty.valid && ty.touched">Please select issue type of ticket!</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-25">
+          <label for="priority"><b>Priority:</b></label>
+        </div>
+        <div class="col-25">
+            <select id="priority" name="priority"
+                    class="form-control" #prio="ngModel"
+                    [(ngModel)]="priority"  [ngModelOptions]="{standalone: true}">
+
+                <option value="HIGHEST">HIGHEST</option>
+                <option value="HIGH">HIGH</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="LOW" selected>LOW</option>
+             </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-25">
+          <label for="severity"><b>Severity:</b></label>
+        </div>
+        <div class="col-25">
+            <select id="severity" name="severity"
+                    class="form-control" #ser="ngModel"
+                    [(ngModel)]="severity"  [ngModelOptions]="{standalone: true}">
+
+                <option value="CRITICAL">CRITICAL</option>
+                <option value="HIGH">HIGH</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="LOW" selected>LOW</option>
+             </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-25">
+          <label for="file"><b>Attachment:</b></label>
         </div>
         <div class="col-75">
           <div class="uploadfilecontainer" (click)="fileInput.click()" appDragdrop (onFileDropped)="uploadFile($event)">
@@ -82,6 +94,7 @@
                      class="form-control" #fileInput hidden
                      [(ngModel)]="fileName"  [ngModelOptions]="{standalone: true}"
                      accept="image/*"  (change)="uploadFile($event.target.files)">
+
               <h5 align="center" *ngIf="!isFileUpload">Click here to upload or Drag here</h5>
               <!-- <span class="help-block" *ngIf="fileInput.touched && isFileUpload">file uploaded</span> -->
 

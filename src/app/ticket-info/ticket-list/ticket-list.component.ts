@@ -92,7 +92,7 @@ export class TicketListComponent implements OnInit {
     return this._dataSourceService.dataSource();
   }
 
-  openDialog(data, event: any): void {
+  updateDialog(data, event: any): void {
     const dialogConfig =new MatDialogConfig();
     // dialogConfig.disableClose =true;
     dialogConfig.autoFocus=true;
@@ -130,7 +130,7 @@ typeFilter(){
   }
 }
 
-priorityFilter(){   
+priorityFilter(){
   console.log("priority filter.."+this.searchPriority);
   if(this.searchPriority=="All"){
   this.searchPriority="";
@@ -140,13 +140,13 @@ priorityFilter(){
   }
 }
 
-displayPop(event:any)
+saveDialog(event:any)
 {
   const dialogConfig =new MatDialogConfig();
   // dialogConfig.disableClose = true;
   dialogConfig.autoFocus=true;
   dialogConfig.width="80%";
-  GlobalConstant.findById = null;   
+  GlobalConstant.findById = null;
   this.dialog.open(SaveTicketDialogComponent,dialogConfig);
 }
 }

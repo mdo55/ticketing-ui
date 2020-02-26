@@ -1,120 +1,144 @@
-<!-- Button to open the modal login form -->
-<!-- <button  (click)="displayPop($event)">Create Ticket </button> -->
-<!-- <div class="registration" *ngIf="showForm"></div> -->
-<!-- The Modal -->
- <!-- <div  id="id01" class="modal" >
-  <span onclick="document.getElementById('id01').style.display='none'"
-class="close"  title="Close Modal">&times;</span>
- </div> -->
-
-
 <div  id="id01" class="modal" >
 
     <!-- Modal Content -->
-   <form #saveform="ngForm"
-    *ngIf="!showForm" id="save-ticket-form-id" class="modal-content animate"
-              (ngSubmit)="onSubmit($event)" >
+    <div class="container">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <form #saveform="ngForm" id="save-ticket-form-id" class="modal-content animate"
+        (ngSubmit)="onSubmit()">
 
-     <div class="container">
-        <h3 align= "center"> {{submitValue}} Ticket  </h3>
+            <div class="form-group row">
+              <div class="col-25">
+                  <label for="ticket"><b>Summary:</b></label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="ticket" name="ticket"
+                      class="form-control" #ticket="ngModel"
+                      [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}"
+                      maxlength="500" minlength="3" placeholder="Enter ticket summary" required>
 
-        <div class="row">
-           <div class="col-25">
-             <label for="ticketRequest.ticket"><b>Ticket:</b></label>&nbsp;
-           </div>
-           <div class="col-75">
-             <input type="text" placeholder="Enter ticket name" maxlength="500" (keyup)="keyEvent($event)"
-             [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}" required>
-           </div>
-         </div>
+                <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 3 to 500 characters!</span>
+              </div>
+            </div>
 
+          <div class="form-group row">
+            <div class="col-25">
+              <label for="description"><b>Description:</b></label>
+            </div>
+            <div class="col-75">
+              <textarea  id="description" name="description"
+                        placeholder="Add comments" maxlength="1500"
+                        class="form-control"  #desc="ngModel"
+                        [(ngModel)]="ticketRequest.description" [ngModelOptions]="{standalone: true}"
+                        rows="3" cols="30" required>
+              </textarea>
+              <br><span class="help-block" style="color:red;" *ngIf="!desc.valid && desc.touched">Enter description of the ticket!</span>
+            </div>
+          </div>
 
-        <div class="row">
-           <div class="col-25">
-             <label for="type"><b>Type:</b></label>&nbsp;
-           </div>
-           <div class="col-75">
-               <select  (change)="keyEvent($event)" [(ngModel)]="ticketRequest.type"
-                  [ngModelOptions]="{standalone: true}" required>
+          <div class="form-group row">
+            <div class="col-25">
+              <label for="IssueType"><b>Issue Type:</b></label>
+            </div>
+            <div class="col-25">
+                <select id="type" name="type"
+                        class="form-control" #ty="ngModel"
+                        [(ngModel)]="ticketRequest.type" [ngModelOptions]="{standalone: true}"
+                        required>
 
-                  <option value="BUG" selected>BUG</option>
-                  <option value="ENHANCEMENT" >ENHANCEMENT</option>
-               </select>
-           </div>
-        </div>
+                    <option value="BUG" selected>BUG</option>
+                    <option value="NewFeature" >New Feature</option>
+                </select>
+                <br><span class="help-block" style="color:red;" *ngIf="!ty.valid && ty.touched">Please select issue type of ticket!</span>
+            </div>
+          </div>
 
+          <div class="form-group row">
+            <div class="col-25">
+              <label for="priority"><b>Priority:</b></label>
+            </div>
+            <div class="col-25">
+                <select id="priority" name="priority"
+                        class="form-control" #prio="ngModel"
+                        [(ngModel)]="ticketRequest.priority"  [ngModelOptions]="{standalone: true}">
 
-        <div class="row">
-           <div class="col-25">
-             <label for="priority"><b>priority:</b></label>&nbsp;
-           </div>
-           <div class="col-75">
-             <select  (change)="keyEvent($event)" [(ngModel)]="ticketRequest.priority"
-                [ngModelOptions]="{standalone: true}" required>
+                    <option value="HIGHEST">HIGHEST</option>
+                    <option value="HIGH">HIGH</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="LOW" selected>LOW</option>
+                 </select>
+            </div>
+          </div>
 
-                <option value="NORMAL">NORMAL</option>
-                <option value="MEDIUM" selected>MEDIUM</option>
-                <option value="HIGH">HIGH</option>
-                <option value="SEVERE">SEVERE</option>
-             </select>
-           </div>
-        </div>
+          <div class="form-group row">
+            <div class="col-25">
+              <label for="severity"><b>Severity:</b></label>
+            </div>
+            <div class="col-25">
+                <select id="severity" name="severity"
+                        class="form-control" #ser="ngModel"
+                        [(ngModel)]="severity"  [ngModelOptions]="{standalone: true}">
 
+                    <option value="CRITICAL">CRITICAL</option>
+                    <option value="HIGH">HIGH</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="LOW" selected>LOW</option>
+                 </select>
+            </div>
+          </div>
 
-        <div class="row">
-           <div class="col-25">
-             <label for="description"><b>Description:</b></label><br>
-           </div>
-           <div class="col-75">
-             <textarea  placeholder="Add comments" maxlength="1500"
-                (keyup)="keyEvent($event)" [(ngModel)]="ticketRequest.description"
-                [ngModelOptions]="{standalone: true}" rows="3" cols="30"></textarea>
-           </div>
-        </div>
+          <div class="form-group row">
+            <div class="col-25">
+              <label for="file"><b>Attachment:</b></label>
+            </div>
+            <div class="col-75">
+              <div class="uploadfilecontainer" (click)="fileInput.click()" appDragdrop (onFileDropped)="uploadFile($event)">
 
+                <input type="file" id="fileUpload" name="fileUpload"
+                         class="form-control" #fileInput hidden
+                         [(ngModel)]="fileName"  [ngModelOptions]="{standalone: true}"
+                         accept="image/*"  (change)="uploadFile($event.target.files)">
 
-        <div class="row">
-           <div class="col-25">
-             <label for="file"><b>Upload file:</b></label>
-           </div>
-           <div class="col-80">
-              <input type="file"  [(ngModel)]="fileName"  [ngModelOptions]="{standalone: true}"
-                accept="image/*" (change)="changeListener($event)">
-           </div>
-           <div class="container" *ngIf="ticketRequest.fileBase64">
-               <img [src]="ticketRequest.fileBase64"  height="130" />
-           </div>
-        </div>
+                  <h5 align="center" *ngIf="!isFileUpload">Click here to upload or Drag here</h5>
+                  <!-- <span class="help-block" *ngIf="fileInput.touched && isFileUpload">file uploaded</span> -->
 
-  
-
-        <br>
-        <div class="col-80">
-           <div class="row">
-              <div  style="width:85%;">
-                 <input class="col-0" id="id03"  type="submit" value=" Cancel">
+                <div class="showFile" *ngIf="isFileUpload">
+                    <div class="container" align="center" style="height:100%; width:100%;" >
+                      <img [src]="base64textString" width="90%" height="180px"/>
+                    </div>
+                </div>
               </div>
 
-              <div style="width:50%;">
-                 <input class="col-1" id="id02" type="submit"  [(ngModel)]="submitValue"
-                [ngModelOptions]="{standalone: true}" [disabled]="!isChanged">
-              </div>
-           </div>
-        </div>
-        
-        
-     </div>
+                <div  class="files-list" *ngIf="isFileUpload">
+                  <!-- *ngFor="let file of files;let i= index"> -->
+                    <p> {{ file }} </p>
+                    <button class="delete-file" (click)="deleteAttachment(0)">
+                      <i class="material-icons" style="color:red;">delete</i>
+                    </button>
+                </div>
+            </div>
+          </div>
 
-   </form>
+          <div class="row">
+            <div class="col-25"></div>
+            <div class="col-25-button">
+              <button class="btn btn-primary" type="submit" [disabled]="!saveform.valid">Submit</button>
+            </div>
+            <div class="col-25-button">
+              <button class="btn btn-primary" type="reset" >Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
   </div>
 
   <br><br><br>
 
 
- 
 
-  
+
+
 
   <script>
       // Get the modal
