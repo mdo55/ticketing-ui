@@ -14,7 +14,8 @@
                 <input type="text" id="ticket" name="ticket"
                       class="form-control" #ticket="ngModel"
                       [(ngModel)]="ticketRequest.ticket" [ngModelOptions]="{standalone: true}"
-                      maxlength="500" minlength="3" placeholder="Enter ticket summary" required>
+                      maxlength="500" minlength="3" placeholder="Enter ticket summary"
+                      (keyup)="keyEvent($event)" required>
 
                 <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 3 to 500 characters!</span>
               </div>
@@ -29,7 +30,7 @@
                         placeholder="Add comments" maxlength="1500"
                         class="form-control"  #desc="ngModel"
                         [(ngModel)]="ticketRequest.description" [ngModelOptions]="{standalone: true}"
-                        rows="3" cols="30" required>
+                        rows="3" cols="30"  (keyup)="keyEvent($event)" required>
               </textarea>
               <br><span class="help-block" style="color:red;" *ngIf="!desc.valid && desc.touched">Enter description of the ticket!</span>
             </div>
@@ -43,10 +44,10 @@
                 <select id="type" name="type"
                         class="form-control" #ty="ngModel"
                         [(ngModel)]="ticketRequest.type" [ngModelOptions]="{standalone: true}"
-                        required>
+                        (change)="keyEvent($event)" required>
 
-                    <option value="BUG" selected>BUG</option>
-                    <option value="NewFeature" >New Feature</option>
+                    <option value="Bug" >Bug</option>
+                    <option value="New Feature" >New Feature</option>
                 </select>
                 <br><span class="help-block" style="color:red;" *ngIf="!ty.valid && ty.touched">Please select issue type of ticket!</span>
             </div>
@@ -58,13 +59,13 @@
             </div>
             <div class="col-25">
                 <select id="priority" name="priority"
-                        class="form-control" #prio="ngModel"
+                        class="form-control" #prio="ngModel"  (change)="keyEvent($event)"
                         [(ngModel)]="ticketRequest.priority"  [ngModelOptions]="{standalone: true}">
 
-                    <option value="HIGHEST">HIGHEST</option>
-                    <option value="HIGH">HIGH</option>
-                    <option value="MEDIUM">MEDIUM</option>
-                    <option value="LOW" selected>LOW</option>
+                    <option value="Highest">Highest</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
                  </select>
             </div>
           </div>
@@ -75,13 +76,13 @@
             </div>
             <div class="col-25">
                 <select id="severity" name="severity"
-                        class="form-control" #ser="ngModel"
+                        class="form-control" #ser="ngModel" (change)="keyEvent($event)"
                         [(ngModel)]="severity"  [ngModelOptions]="{standalone: true}">
 
-                    <option value="CRITICAL">CRITICAL</option>
-                    <option value="HIGH">HIGH</option>
-                    <option value="MEDIUM">MEDIUM</option>
-                    <option value="LOW" selected>LOW</option>
+                    <option value="Critical">Critical</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
                  </select>
             </div>
           </div>
@@ -101,14 +102,13 @@
                   <h5 align="center" *ngIf="!isFileUpload">Click here to upload or Drag here</h5>
                   <!-- <span class="help-block" *ngIf="fileInput.touched && isFileUpload">file uploaded</span> -->
 
-                <div class="showFile" *ngIf="isFileUpload">
-                    <div class="container" align="center" style="height:100%; width:100%;" >
-                      <img [src]="base64textString" width="90%" height="180px"/>
-                    </div>
+                <div class="showFile" *ngIf="isFileUpload" >
+                      <img [src]="base64textString" width="100%" height="100%" style="border-radius: 10px;"/>
+
                 </div>
               </div>
 
-                <div  class="files-list" *ngIf="isFileUpload">
+                <div  class="files-list" *ngIf="isFileName">
                   <!-- *ngFor="let file of files;let i= index"> -->
                     <p> {{ file }} </p>
                     <button class="delete-file" (click)="deleteAttachment(0)">
@@ -121,10 +121,16 @@
           <div class="row">
             <div class="col-25"></div>
             <div class="col-25-button">
-              <button class="btn btn-primary" type="submit" [disabled]="!saveform.valid">Submit</button>
+              <button class="btn btn-primary" id="id02" type="submit" [disabled]="!isChanged">Submit</button>
             </div>
             <div class="col-25-button">
-              <button class="btn btn-primary" type="reset" >Cancel</button>
+              <button class="btn btn-primary" id="id03" >Cancel</button>
+            </div>
+            <div class="col-0"></div>
+            <div class="col-25-button" *ngIf="isFileUpload">
+              <button class="btn btn-primary" (click)="deleteAttachment(0)">
+                    Remove Image
+              </button>
             </div>
           </div>
         </form>

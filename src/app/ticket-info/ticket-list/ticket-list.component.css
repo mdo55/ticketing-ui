@@ -1,7 +1,7 @@
 .full-width-table {
   align-self: center;
   width: 100%;
-  border: 20px auto;
+  /* border: 20px auto; */
 }
 
 .search-div{
@@ -9,8 +9,8 @@
   margin: 10px;
   width: 30%;
   height: 10%;
-  float: left; 
-  } 
+  float: left;
+  }
 
 .search-from-field{
   width: 90%;
@@ -22,7 +22,7 @@
 
 .hide{
   display: none;
-  } 
+  }
 
   .modal {
     display: none; /* Hidden by default */
@@ -153,7 +153,7 @@
 
   table{
     width: 100%;
-    border-style: solid;
+    /* border-style: solid; */
   }
   button{
     background-color: #E15D29;
@@ -174,4 +174,15 @@
  .matId{
   cursor: pointer;
 }
-  
+
+.mat-row:nth-child(even){
+  background-color:white;
+  }
+
+  .mat-row:nth-child(odd){
+  background-color:#EFEEF1;
+  }
+
+  .mat-row:hover {
+    background-color: rgb(233, 220, 215);
+  }

@@ -1,7 +1,5 @@
 .container{
   position: relative;
-  overflow-x: hidden;
-  overflow-y: scroll;
 }
 
 /* The Close Button */
@@ -76,24 +74,10 @@
     float: right;
   } */
 
-  .col-1 {
-    background-color: grey;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-  }
-
   .col-0 {
-    background-color: #E15D29;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
+    float: left;
+    width: 10px;
+    margin-top: 3px;
   }
 
   /* Style the container */
@@ -173,7 +157,7 @@ textarea.ng-invalid.ng-touched{
   background-size: 100px;
   background-position: center;
   height: 200px;
-  width: 80%;
+  width: 60%;
   float: left;
   margin: 20px auto;
   border: 2px dashed #9c9ca5;
@@ -186,18 +170,17 @@ textarea.ng-invalid.ng-touched{
   opacity: 0.8;
 }
 
-.files-list {
+/* .files-list {
   display: flex;
   justify-content: space-between;
   width: 80%;
   margin: 10px auto;
-  background: #efeef1;
-  border: 1px dashed #9c9ca5;
-  border-radius: 12px;
+  background:transparent;
+
   padding-left: 15px;
   color: #111111;
   float: left;
-}
+} */
 
 .files-list .delete-file {
   background: transparent;
@@ -210,28 +193,8 @@ textarea.ng-invalid.ng-touched{
 }
 
 .showFile{
-  padding: 10px;
-  height: 70%;
+  padding: 0px;
+  height: 100%;
   width: 100%;
-
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  border-radius: 10px;
 }

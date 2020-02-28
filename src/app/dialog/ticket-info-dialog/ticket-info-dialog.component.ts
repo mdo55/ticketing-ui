@@ -26,12 +26,14 @@ export class TicketInfoDialogComponent implements OnInit {
   isChanged: boolean;
   isFileChanged: boolean;
   style: any;
+  file: any;
+  isFileUpload: boolean;
 
   constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>,
     private dialog :MatDialog,
     private _dataSourceService: DataSourceService,@Inject(MAT_DIALOG_DATA) public data:any) {
     this.ticketRequest = new TicketRequest();
-    
+
   }
 
   ngOnInit() {
@@ -42,17 +44,12 @@ export class TicketInfoDialogComponent implements OnInit {
     this.onClose();
     this.saveOrUpdateTicket();
 
-    } 
+    }
   displayErrorMessage(data : any){
-    //  this.openAlertDialog.open(event);
-    //  data.message;
-      // console.log(data.message);
-      // this.openAlertDialog(data);
   }
 
   onClose() {
     this.dialogRef.close();
-    
   }
 
   onCancel() {
@@ -76,17 +73,12 @@ export class TicketInfoDialogComponent implements OnInit {
       data=>{
         if(data) {
           this._dataSourceService.updateData(data);
-        //   this.router.navigateByUrl('/ticket-list', { skipLocationChange: true }).then(() => {
-        //     this.router.navigate(['/ticket-list'], {skipLocationChange: true});
-        // });
-
         }
       },
       (error)=>{
         console.log(error.error.message);
       }
     );
-
   }
 
   updateTicket(){
@@ -94,12 +86,9 @@ export class TicketInfoDialogComponent implements OnInit {
       data=>{
         if(data)
         {
-  
           if(data.message){
             console.log("update functionality called....");
             this.data = data;
-            // this.displayErrorMessage(data);
-            console.log("------"+this.data.message);
             this.openAlertDialog(this.data);
           }
           else{
@@ -118,19 +107,21 @@ export class TicketInfoDialogComponent implements OnInit {
       }
     );
   }
- 
+
   findById(ticketId : number): void {
+    this.isFileUpload = true;
+    // this.file=
     if(ticketId && this.submitValue == "Update"){
     this._ticketService.findById(ticketId).subscribe(
       data=> {
         this.ticketRequest = data;
+        this.base64textString = data.fileBase64;
+        // console.log(this.base64textString);
         this.cloneRequest = this._dataSourceService.data.filter((value) =>{
           if(value.ticketId == ticketId){
             return value;
           }
         });
-        console.log("----------------"+this.cloneRequest[0].ticket);
-        console.log("----------------"+this.cloneRequest[0].description);
       },
       (error)=>{
         console.log(error.error.message);
@@ -147,31 +138,32 @@ export class TicketInfoDialogComponent implements OnInit {
 
 
 
-  changeListener($event) : void
+  changeListener(file) : void
   {
-    this.readThis($event.target);
+    this.readThis(file);
     this.isChanged =true;
     document.getElementById("id02").style.backgroundColor=' #E15D29';
   }
 
-  readThis(inputValue: any): void
+  readThis(inputValue: File): void
   {
-    var file:File = inputValue.files[0];
-    var myReader:FileReader = new FileReader();
+    console.log("readThis..........."+inputValue);
+    var file: File = inputValue;
+    var myReader: FileReader = new FileReader();
+    console.log("our file is attached " + this.fileName);
 
     myReader.onloadend = () => {
       this.readFileExtension(this.fileName);
       if (myReader.result) {
         this.ticketRequest.attached = true;
         this.ticketRequest.fileBase64 = myReader.result;
+        this.base64textString = this.ticketRequest.fileBase64;
       }
     }
     if(file){
       myReader.readAsDataURL(file);
     }
   }
-
-
 
   readFileExtension(fileName: string) {
     if(fileName){
@@ -186,15 +178,10 @@ export class TicketInfoDialogComponent implements OnInit {
 
     if(this.submitValue == "Update")
    {
-      // console.log("key triggered")
       let desc = this.cloneRequest[0].description;
       let tiket = this.cloneRequest[0].ticket;
       let types = this.cloneRequest[0].type;
       let prio = this.cloneRequest[0].priority;
-      // let types = this.cloneRequest[0].type;
-
-      // document.getElementById("id02").style.backgroundColor='grey';
-      // console.log("ticket----"+this.ticketRequest.ticket)
 
       if((desc ==  this.ticketRequest.description) && (tiket == this.ticketRequest.ticket)
       && (types == this.ticketRequest.type) && (prio == this.ticketRequest.priority))
@@ -220,7 +207,7 @@ export class TicketInfoDialogComponent implements OnInit {
     }
 
   }
-  
+
   openAlertDialog(data): void {
     const dialogConfig =new MatDialogConfig();
     dialogConfig.disableClose =true;
@@ -232,5 +219,25 @@ export class TicketInfoDialogComponent implements OnInit {
     this.dialog.open(AlertdialogComponent,dialogConfig);
     }
 
+    uploadFile(event) {
+      for (let index = 0; index < event.length; index++) {
+        if(0==index){
+          console.log("index", index);
+        const element = event[index];
 
+        }
+        this.file=event[index].name
+        this.isFileUpload = true;
+        // console.log(event+"---------"+event[0]);
+        this.changeListener(event[0]);
+      }
+    }
+    deleteAttachment(index) {
+      console.log("index", index);
+      // this.files.splice(index, 1);
+      this.file = null;
+      this.isFileUpload = false;
+      // this.base64textString = null;
+      // this.ticketRequest.fileBase64=null;
+    }
 }

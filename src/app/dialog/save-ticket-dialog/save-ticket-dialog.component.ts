@@ -16,9 +16,9 @@ export class SaveTicketDialogComponent implements OnInit {
   private ticketRequest: TicketRequest;
   showForm: boolean;
   ticket: string;
-  type: string = 'BUG';
-  priority: string = 'LOW';
-  severity: string = 'LOW';
+  type: string = 'Bug';
+  priority: string = 'Low';
+  severity: string = 'Low';
   description: string;
   base64textString: string | ArrayBuffer;
   fileExtension: string;
@@ -27,6 +27,7 @@ export class SaveTicketDialogComponent implements OnInit {
   fileName: string;
   file: any;
   isFileUpload: boolean;
+  submitValue : string ;
 
   constructor(private _ticketService: TicketService, public dialogRef: MatDialogRef<SaveTicketDialogComponent>,
     private changeDetectorRefs: ChangeDetectorRef, private router: Router, private formBuilder: FormBuilder,
@@ -39,7 +40,6 @@ export class SaveTicketDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.onClose();
     this.saveTicket();
   }
 
@@ -54,11 +54,16 @@ export class SaveTicketDialogComponent implements OnInit {
   saveTicket() {
     this.ticketRequest.userId = "vamsi@altimetrik.com";
     this.ticketRequest.type = this.type;
-    this.ticketRequest.priority=this.priority;
+    // this.ticketRequest.priority=this.priority;
     this._ticketService.saveTicketInfo(this.ticketRequest).subscribe(
       data => {
         if (data) {
-          this._dataSourceService.updateData(data);
+          if(data.ticketId){
+            this._dataSourceService.updateData(data);
+          }
+          if(data.message) {
+            // show error dialog
+          }
         }
       },
       (error) => {
@@ -68,12 +73,10 @@ export class SaveTicketDialogComponent implements OnInit {
     if (this.showForm) {
       return this.router.navigateByUrl('/ticket-list');
     }
-
+    this.onClose();
   }
 
-
   changeListener(file): void {
-    // console.log("changeListener triggered "+file);
     this.readThis(file);
   }
 
@@ -87,13 +90,13 @@ export class SaveTicketDialogComponent implements OnInit {
       // console.log("this.image="+myReader.result);
       // let bufferImg: string | ArrayBuffer;
 
-
       this.base64textString = myReader.result;
       this.fileExtension = this.fileName.split(".")[1];
       console.log("file extension updated " + this.fileExtension);
       if (this.base64textString) {
         this.isFileAttached = true;
-        // console.log(this.base64textString);
+        this.ticketRequest.fileBase64 = this.base64textString;
+        console.log(this.base64textString);
       }
     }
     myReader.readAsDataURL(file);
