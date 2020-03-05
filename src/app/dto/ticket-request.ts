@@ -16,6 +16,7 @@ export class TicketRequest implements TRequest {
     priority: string;
     active: boolean;
     fileName: string;
+    severity: string;
     constructor() {}
 }
 interface TRequest {
@@ -36,5 +37,6 @@ interface TRequest {
     priority: string;
     active: boolean;
     fileName: string;
+    severity: string;
 }
 

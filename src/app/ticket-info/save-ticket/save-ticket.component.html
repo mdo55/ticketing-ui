@@ -18,41 +18,38 @@
     <div id ="left" style = "float: left; width: 70%;" >
         <div class="row">
       <div class="col-25">
-          <label for="ticket"><b>Ticket:</b></label>&nbsp;
+          <label for="ticket"><b>Summary:</b></label>&nbsp;
       </div>
       <div class="col-75">
           <input type="text" placeholder="Enter ticket name" maxlength="500" 
           [(ngModel)]="ticket" [ngModelOptions]="{standalone: true}" required>
       </div>
       </div>
-
-
       <div class="row">
       <div class="col-25">
-          <label for="type"><b>Type:</b></label>&nbsp;
+          <label for="type"><b>IssueType:</b></label>&nbsp;
       </div>
       <div class="col-75">
           <select  [(ngModel)]="type" [ngModelOptions]="{standalone: true}" required>
-              <option value="BUG" selected>BUG</option>
-              <option value="ENHANCEMENT" >ENHANCEMENT</option>
+              <option value="Bug" selected>Bug</option>
+              <option value="NewFeature" >New Feature</option>
             </select>
       </div>
      </div>
 
     <div class="row" >
       <div class="col-25">
-          <label for="priority"><b>priority:</b></label>&nbsp;
+          <label for="priority"><b>Priority:</b></label>&nbsp;
       </div>
       <div class="col-75">
           <select  [(ngModel)]="priority" [ngModelOptions]="{standalone: true}" required>
-              <option value="NORMAL">NORMAL</option>
-              <option value="MEDIUM" selected>MEDIUM</option>
-              <option value="HIGH">HIGH</option>
-              <option value="SEVERE">SEVERE</option>
+              <option value="Low" selected>Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Highest">Highest</option>
             </select>
       </div>
       </div>
- 
 
       <div class="row" >
       <div class="col-25">
@@ -72,29 +69,21 @@
             accept="image/*" (change)="changeListener($event)"> 
         </div>
         </div>
-
     </div> 
    
- <div id ="right" style = "float: right; width: 30%;">
-     <div class="col-10">
-    <div class="row" *ngIf="fileName">
-        <img [src]="base64textString"  height="130" />
-      </div>
-    </div>
-    </div>
- 
-</div>
-
-
-    <div class="row">
-           
-                    <div style="width:55%;"><input type="reset" value="Clear"> </div>
-                    <div style="width:45%;"><input type="submit"  value="Save" ></div>
-              
+    <div id ="right" style = "float: right; width: 30%;">
+        <div class="col-10">
+            <div class="row" *ngIf="fileName">
+                <img [src]="base64textString"  height="130" />
             </div>
-           
-</div>
-
+        </div>
+    </div>
+    </div>
+        <div class="row">
+            <div style="width:55%;"><input type="reset" value="Clear"> </div>
+            <div style="width:45%;"><input type="submit"  value="Save" ></div>
+        </div>
+    </div>
   </form>
 </div>
 

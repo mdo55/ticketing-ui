@@ -21,8 +21,8 @@ import { HttpParams } from '@angular/common/http';
 export class SaveTicketComponent implements OnInit{
  showForm: boolean;
  ticket: string;
- type: string='BUG';
- priority: string='MEDIUM';
+ type: string =  "Bug";
+ priority: string = "Low";
  description:string;
  uploadFile: File;
  base64textString:string | ArrayBuffer;
@@ -42,17 +42,12 @@ previewUrl:any = null;
    }
 
   ngOnInit() {
-    // Router.getCurrentNavigation().extras.state
-    // this.extractedUrl = 
-    // this.extractedUrl = this.router.getCurrentNavigation().extras.state;
-    // console.log(this.router.;
    this.displayPop(event);
   }
  
   saveTicketInfo(event:any){
     event.preventDefault();
     this.showForm = true;
-   
 
     document.getElementById('id01').style.visibility="hidden";
    
@@ -82,8 +77,8 @@ previewUrl:any = null;
       }
     );
     this.ticket="";
-    this.type="BUG";
-    this.priority="NORMAL";
+    this.type="Bug";
+    this.priority="Low";
     this.description="";
     this.isFileAttached=false;
     if(this.showForm){

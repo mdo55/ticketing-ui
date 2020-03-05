@@ -111,7 +111,7 @@ export class TicketInfoDialogComponent implements OnInit {
   findById(ticketId : number): void {
     this.isFileUpload = true;
     // this.file=
-    if(ticketId && this.submitValue == "Update"){
+    if(ticketId && this.submitValue == "Update") {
     this._ticketService.findById(ticketId).subscribe(
       data=> {
         this.ticketRequest = data;
@@ -127,16 +127,14 @@ export class TicketInfoDialogComponent implements OnInit {
         console.log(error.error.message);
       });
     }
-
     else  {
       this.submitValue="Save";
       this.ticketRequest = new TicketRequest();
-      this.ticketRequest.type="BUG";
-      this.ticketRequest.priority="NORMAL";
+      this.ticketRequest.type="Bug";
+      this.ticketRequest.priority="Low";
+      this.ticketRequest.severity="Low"
     }
   }
-
-
 
   changeListener(file) : void
   {
@@ -173,10 +171,8 @@ export class TicketInfoDialogComponent implements OnInit {
   }
 
   keyEvent(){
-    // console.log("clone"+this.cloneRequest[0].ticket)
-    // console.log("original"+this.ticketRequest.ticket)
-
-    if(this.submitValue == "Update")
+   
+   if(this.submitValue == "Update")
    {
       let desc = this.cloneRequest[0].description;
       let tiket = this.cloneRequest[0].ticket;
@@ -197,7 +193,6 @@ export class TicketInfoDialogComponent implements OnInit {
       if((this.ticketRequest.ticket== '') || (this.ticketRequest.description == '')){
         this.isChanged = false;
         document.getElementById("id02").style.backgroundColor='grey';
-
       }
     }
 
@@ -205,7 +200,6 @@ export class TicketInfoDialogComponent implements OnInit {
      this.isChanged=false;
     document.getElementById("id02").style["background-color"]="#E15D29";
     }
-
   }
 
   openAlertDialog(data): void {
@@ -213,9 +207,7 @@ export class TicketInfoDialogComponent implements OnInit {
     dialogConfig.disableClose =true;
     dialogConfig.autoFocus=true;
     dialogConfig.width="80%";
-    // let ticketInfo: any = this.findById(data.ticketId);
     dialogConfig.data = data;
-    // this.displayErrorMessage(data);
     this.dialog.open(AlertdialogComponent,dialogConfig);
     }
 
@@ -228,7 +220,6 @@ export class TicketInfoDialogComponent implements OnInit {
         }
         this.file=event[index].name
         this.isFileUpload = true;
-        // console.log(event+"---------"+event[0]);
         this.changeListener(event[0]);
       }
     }
@@ -237,7 +228,5 @@ export class TicketInfoDialogComponent implements OnInit {
       // this.files.splice(index, 1);
       this.file = null;
       this.isFileUpload = false;
-      // this.base64textString = null;
-      // this.ticketRequest.fileBase64=null;
     }
 }

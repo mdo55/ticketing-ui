@@ -96,6 +96,7 @@ export class SaveTicketDialogComponent implements OnInit {
       if (this.base64textString) {
         this.isFileAttached = true;
         this.ticketRequest.fileBase64 = this.base64textString;
+        this.ticketRequest.attached = this.isFileAttached;
         console.log(this.base64textString);
       }
     }
