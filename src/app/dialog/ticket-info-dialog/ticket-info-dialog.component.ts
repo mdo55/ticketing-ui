@@ -228,5 +228,11 @@ export class TicketInfoDialogComponent implements OnInit {
       // this.files.splice(index, 1);
       this.file = null;
       this.isFileUpload = false;
+      this.base64textString = null;
+      this.ticketRequest.fileBase64 = null;
+      this.ticketRequest.attached = false;
+      // this.isChanged = true;
+      this.isChanged = true;
+      document.getElementById("id02").style.backgroundColor=' #E15D29';
     }
 }

@@ -31,8 +31,8 @@ class="close"  title="Close Modal">&times;</span>  -->
 <!-- (change) -->
 <select matNativeControl [(ngModel)]="searchType" placeholder="Filter by Type" (change)="typeFilter()" (focus)="setupFilter('type')">
 <option>All</option>
-<option value="BUG">BUG</option>
-<option value="ENHANCEMENT">ENHANCEMENT</option>
+<option value="Bug">Bug</option>
+<option value="NewFeature">New Feature</option>
 </select>
 <!-- <button type="submit" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="typeFilter()">
 <mat-icon>search</mat-icon>
@@ -45,10 +45,10 @@ class="close"  title="Close Modal">&times;</span>  -->
   <mat-form-field class="search-from-field" floatLable="never">
   <select matNativeControl [(ngModel)]="searchPriority" placeholder="Filter by Priority" (change)="priorityFilter()" (focus)="setupFilter('priority')">
   <option>All</option>
-  <option value="NORMAL">NORMAL</option>
-  <option value="MEDIUM">MEDIUM</option>
-  <option value="HIGH">HIGH</option>
-  <option value="SEVERE">SEVERE</option>
+  <option value="Low">Low</option>
+  <option value="Medium">Medium</option>
+  <option value="High">High</option>
+  <option value="Highest">Highest</option>
   </select>
   <!-- <button type="submit" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="priorityFilter()">
   <mat-icon>search</mat-icon>
