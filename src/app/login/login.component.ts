@@ -3,8 +3,8 @@ import { Router } from  '@angular/router';
 import { User } from  '../user';
 import { AuthService } from  '../auth.service';
 import { OnInit, Component } from '@angular/core';
-@Component({ 
-  
+@Component({
+
   templateUrl: 'login.component.html',
    styleUrls :['login.component.css']})
 export class LoginComponent implements OnInit {
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 }
 
   get formControls() { return this.loginForm.controls; }
-  
+
   login(){
     console.log(this.loginForm.value);
     this.isSubmitted = true;
@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(this.loginForm.value);
     // this.router.navigateByUrl('/save-ticket');
-    this.router.navigate(['/save-ticket', { externalUrl: "ksambhe@altimetrik.com" }]);
+    this.router.navigate(['/save-ticket']);
   }
 
-  
 
-  
+
+
 }

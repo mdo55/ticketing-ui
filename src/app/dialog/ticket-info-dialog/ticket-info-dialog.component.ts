@@ -30,7 +30,7 @@ export class TicketInfoDialogComponent implements OnInit {
   isFileUpload: boolean;
 
   constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>,
-    private dialog :MatDialog,
+    private dialog :MatDialog,private router: Router,
     private _dataSourceService: DataSourceService,@Inject(MAT_DIALOG_DATA) public data:any) {
     this.ticketRequest = new TicketRequest();
 
@@ -43,7 +43,8 @@ export class TicketInfoDialogComponent implements OnInit {
   onSubmit(){
     this.onClose();
     this.saveOrUpdateTicket();
-
+    // return this.router.navigateByUrl('/ticket-list');
+    window.location.reload();
     }
   displayErrorMessage(data : any){
   }
@@ -82,6 +83,8 @@ export class TicketInfoDialogComponent implements OnInit {
   }
 
   updateTicket(){
+    console.log("update: -"+this.ticketRequest);
+
     this._ticketService.updateTicket(this.ticketRequest).subscribe(
       data=>{
         if(data)
@@ -116,7 +119,7 @@ export class TicketInfoDialogComponent implements OnInit {
       data=> {
         this.ticketRequest = data;
         this.base64textString = data.fileBase64;
-        // console.log(this.base64textString);
+        console.log("findByID: --"+this.base64textString);
         this.cloneRequest = this._dataSourceService.data.filter((value) =>{
           if(value.ticketId == ticketId){
             return value;
@@ -156,6 +159,7 @@ export class TicketInfoDialogComponent implements OnInit {
         this.ticketRequest.attached = true;
         this.ticketRequest.fileBase64 = myReader.result;
         this.base64textString = this.ticketRequest.fileBase64;
+        console.log("upload file function called...");
       }
     }
     if(file){
@@ -171,7 +175,7 @@ export class TicketInfoDialogComponent implements OnInit {
   }
 
   keyEvent(){
-   
+
    if(this.submitValue == "Update")
    {
       let desc = this.cloneRequest[0].description;
@@ -235,4 +239,6 @@ export class TicketInfoDialogComponent implements OnInit {
       this.isChanged = true;
       document.getElementById("id02").style.backgroundColor=' #E15D29';
     }
+
+
 }

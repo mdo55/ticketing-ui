@@ -41,6 +41,7 @@ export class SaveTicketDialogComponent implements OnInit {
 
   onSubmit() {
     this.saveTicket();
+    return this.router.navigateByUrl('/ticket-list');
   }
 
   onClose() {
@@ -54,7 +55,8 @@ export class SaveTicketDialogComponent implements OnInit {
   saveTicket() {
     this.ticketRequest.userId = "vamsi@altimetrik.com";
     this.ticketRequest.type = this.type;
-    // this.ticketRequest.priority=this.priority;
+    this.ticketRequest.priority= this.priority;
+
     this._ticketService.saveTicketInfo(this.ticketRequest).subscribe(
       data => {
         if (data) {

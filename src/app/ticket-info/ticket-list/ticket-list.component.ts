@@ -83,6 +83,7 @@ export class TicketListComponent implements OnInit {
       // this.dataSource = this._dataSourceService.dataSource();
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+
     },(error)=>{
       console.log(error.error.message);
     });
@@ -102,6 +103,16 @@ export class TicketListComponent implements OnInit {
     this.dialog.open(TicketInfoDialogComponent,dialogConfig);
   }
 
+
+  saveDialog(event:any)
+{
+  const dialogConfig =new MatDialogConfig();
+  // dialogConfig.disableClose = true;
+  dialogConfig.autoFocus=true;
+  dialogConfig.width="80%";
+  GlobalConstant.findById = null;
+  this.dialog.open(SaveTicketDialogComponent,dialogConfig);
+}
   setupFilter(column: string) {
     console.log("setup filter called on "+column);
     this.dataSource.filterPredicate = (d:any, filter: string) => {
@@ -140,14 +151,6 @@ priorityFilter(){
   }
 }
 
-saveDialog(event:any)
-{
-  const dialogConfig =new MatDialogConfig();
-  // dialogConfig.disableClose = true;
-  dialogConfig.autoFocus=true;
-  dialogConfig.width="80%";
-  GlobalConstant.findById = null;
-  this.dialog.open(SaveTicketDialogComponent,dialogConfig);
-}
-}
 
+
+}

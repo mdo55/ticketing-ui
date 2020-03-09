@@ -10,6 +10,8 @@ import { TicketService } from 'src/app/ticket.service';
 import { GlobalConstant } from 'src/app/common/GlobalConstants';
 import { Router, UrlTree } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { DataSourceService } from 'src/app/service/DataSourceService';
+import { SaveTicketDialogComponent } from 'src/app/dialog/save-ticket-dialog/save-ticket-dialog.component';
 
 
 @Component({
@@ -36,87 +38,96 @@ previewUrl:any = null;
   isShow: boolean;
 
   constructor(private _ticketService:TicketService, private domSanitizer: DomSanitizer,
-    private router: Router, private formBuilder: FormBuilder) {
+    private router: Router, private formBuilder: FormBuilder, private dialog :MatDialog, private _dataSourceService: DataSourceService) {
     this.showForm = false;
     GlobalConstant.dataSource= new MatTableDataSource([]);
    }
 
   ngOnInit() {
-   this.displayPop(event);
-  }
- 
-  saveTicketInfo(event:any){
-    event.preventDefault();
-    this.showForm = true;
-
-    document.getElementById('id01').style.visibility="hidden";
-   
-    let saveRequest: any = {
-      userId: "vamsi@altimetrik.com",
-      ticket: this.ticket,
-      description: this.description,
-      attached: this.isFileAttached,
-      type: this.type,
-      priority: this.priority,
-      fileBase64: this.base64textString,
-      fileExtension: this.fileExtension
-    };
-
-   this._ticketService.saveTicketInfo(saveRequest).subscribe(
-      data=>{
-        // console.log(data);
-        this.response=data;
-        if(data) {
-          GlobalConstant.dataSource.data.push(data);
-          GlobalConstant.dataSource.sort = GlobalConstant.dataSource.sort;
-          GlobalConstant.dataSource.paginator = GlobalConstant.dataSource.paginator;
-        }
-      },
-      (error)=>{
-        console.log(error.error.message);
-      }
-    );
-    this.ticket="";
-    this.type="Bug";
-    this.priority="Low";
-    this.description="";
-    this.isFileAttached=false;
-    if(this.showForm){
-      return this.router.navigateByUrl('/ticket-list');
-    }
-    
-  }
-  changeListener($event) : void {
-console.log("changeListener triggered ")
-    this.readThis($event.target);
+ this.saveDialog(event);
   }
 
-  readThis(inputValue: any): void {
-    var file:File = inputValue.files[0];
-    var myReader:FileReader = new FileReader();
-    console.log("our file is attached "+this.fileName);
+//   saveTicketInfo(event:any){
+//     event.preventDefault();
+//     this.showForm = true;
 
-    myReader.onloadend = (e) => {
-      // console.log("this.image="+myReader.result);
-      // let bufferImg: string | ArrayBuffer;
+//     document.getElementById('id01').style.visibility="hidden";
+
+//     let saveRequest: any = {
+//       userId: "vamsi@altimetrik.com",
+//       ticket: this.ticket,
+//       description: this.description,
+//       attached: this.isFileAttached,
+//       type: this.type,
+//       priority: this.priority,
+//       fileBase64: this.base64textString,
+//       fileExtension: this.fileExtension
+//     };
+
+//    this._ticketService.saveTicketInfo(saveRequest).subscribe(
+//       data=>{
+//         // console.log(data);
+//         this.response=data;
+//         if(data) {
+//           GlobalConstant.dataSource.data.push(data);
+//           GlobalConstant.dataSource.sort = GlobalConstant.dataSource.sort;
+//           GlobalConstant.dataSource.paginator = GlobalConstant.dataSource.paginator;
+//         }
+//       },
+//       (error)=>{
+//         console.log(error.error.message);
+//       }
+//     );
+//     this.ticket="";
+//     this.type="Bug";
+//     this.priority="Low";
+//     this.description="";
+//     this.isFileAttached=false;
+//     if(this.showForm){
+//       return this.router.navigateByUrl('/ticket-list');
+//     }
+
+//   }
+//   changeListener($event) : void {
+// console.log("changeListener triggered ")
+//     this.readThis($event.target);
+//   }
+
+//   readThis(inputValue: any): void {
+//     var file:File = inputValue.files[0];
+//     var myReader:FileReader = new FileReader();
+//     console.log("our file is attached "+this.fileName);
+
+//     myReader.onloadend = (e) => {
+//       // console.log("this.image="+myReader.result);
+//       // let bufferImg: string | ArrayBuffer;
 
 
-      this.base64textString = myReader.result;
-      this.fileExtension = this.fileName.split(".")[1];
-      console.log("file extension updated "+this.fileExtension);
-      if(this.base64textString){
-          this.isFileAttached=true;
-          // console.log(this.base64textString);
-      }
-    }
-    myReader.readAsDataURL(file);
-  }
+//       this.base64textString = myReader.result;
+//       this.fileExtension = this.fileName.split(".")[1];
+//       console.log("file extension updated "+this.fileExtension);
+//       if(this.base64textString){
+//           this.isFileAttached=true;
+//           // console.log(this.base64textString);
+//       }
+//     }
+//     myReader.readAsDataURL(file);
+//   }
 
-displayPop(event:any)
+// displayPop(event:any)
+// {
+//   document.getElementById('id01').style.display='block';
+//   document.getElementById('id01').style.visibility='';
+//   this.showForm = false;
+// }
+saveDialog(event:any)
 {
-  document.getElementById('id01').style.display='block';
-  document.getElementById('id01').style.visibility='';
-  this.showForm = false;
+  const dialogConfig =new MatDialogConfig();
+  dialogConfig.disableClose = true;
+  dialogConfig.autoFocus=true;
+  dialogConfig.width="80%";
+  GlobalConstant.findById = null;
+  this.dialog.open(SaveTicketDialogComponent,dialogConfig);
 }
 
 }
