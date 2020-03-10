@@ -28,6 +28,8 @@ export class TicketInfoDialogComponent implements OnInit {
   style: any;
   file: any;
   isFileUpload: boolean;
+  fileSplits: string[];
+  fileLength: any;
 
   constructor(private _ticketService:TicketService, public dialogRef: MatDialogRef<TicketInfoDialogComponent>,
     private dialog :MatDialog,private router: Router,
@@ -58,7 +60,7 @@ export class TicketInfoDialogComponent implements OnInit {
   }
 
   saveOrUpdateTicket(){
-    console.log("data added"+this.ticketRequest)
+    // console.log("data added"+this.ticketRequest)
     if(this.submitValue == "Update")
     {
       this.updateTicket();
@@ -68,6 +70,7 @@ export class TicketInfoDialogComponent implements OnInit {
     this.saveTicket();
     }
   }
+
   saveTicket(){
     this.ticketRequest.userId = "vamsi@altimetrik.com";
     this._ticketService.saveTicketInfo(this.ticketRequest).subscribe(
@@ -119,7 +122,7 @@ export class TicketInfoDialogComponent implements OnInit {
       data=> {
         this.ticketRequest = data;
         this.base64textString = data.fileBase64;
-        console.log("findByID: --"+this.base64textString);
+        // console.log("findByID: --"+this.base64textString);
         this.cloneRequest = this._dataSourceService.data.filter((value) =>{
           if(value.ticketId == ticketId){
             return value;
@@ -159,7 +162,7 @@ export class TicketInfoDialogComponent implements OnInit {
         this.ticketRequest.attached = true;
         this.ticketRequest.fileBase64 = myReader.result;
         this.base64textString = this.ticketRequest.fileBase64;
-        console.log("upload file function called...");
+        // console.log("upload file function called..."+ this.ticketRequest.fileBase64);
       }
     }
     if(file){
@@ -169,8 +172,11 @@ export class TicketInfoDialogComponent implements OnInit {
 
   readFileExtension(fileName: string) {
     if(fileName){
-        this.ticketRequest.fileExtension=this.fileName.split(".")[1];
-        console.log(this.ticketRequest);
+        // this.ticketRequest.fileExtension=fileName.split(".")[1];
+        this.fileSplits=fileName.split(".");
+        this.fileLength=this.fileSplits.length;
+        this.ticketRequest.fileExtension=this.fileSplits[this.fileLength-1];
+        console.log("this.ticketRequest.fileExtension--------"+this.ticketRequest.fileExtension);
     }
   }
 
