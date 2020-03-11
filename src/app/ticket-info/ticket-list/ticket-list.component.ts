@@ -17,6 +17,7 @@ import { TicketRequest } from 'src/app/dto/ticket-request';
 import { DataSourceService } from 'src/app/service/DataSourceService';
 import { TicketDto } from 'src/app/dto/TicketDto';
 import { SaveTicketDialogComponent } from 'src/app/dialog/save-ticket-dialog/save-ticket-dialog.component';
+import { Router } from '@angular/router';
 // import { SaveTicketComponent } from 'src/app/ticket-info/save-ticket/save-ticket.component';
 
 @Component({
@@ -48,45 +49,56 @@ export class TicketListComponent implements OnInit {
   searchType: string;
   searchPriority: string;
   data: TicketDto[];
+  dataCount : any;
+  length: any;
 
 
 
-  constructor(private _ticketService:TicketService, private dialog :MatDialog, private _dataSourceService: DataSourceService){}
+  constructor(private _ticketService:TicketService, private dialog :MatDialog,
+    private router: Router,private _dataSourceService: DataSourceService){}
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['ticketId', 'userId', 'ticket', 'type', 'status', 'priority'];//,'createdBy'];//, 'actions'];
 
   ngOnInit() {
-    // this.dataSource: DataTableDataSource<any>;
-    console.log("ticket list init triggered")
-    // setTimeout(() => { console.log("lsjdj"); }, 1000);
     this.getPage(event);
+    // this.getDataCount();
   }
   ngAfterViewInit(){
-    console.log("after view init triggered");
   }
-  // ngOnDestroy() {
-  //   console.log("ngOnDestroy triggered")
-  // }
   getPage(event){
-    console.log("ticket list init triggered after getPage ")
     this._ticketService.getPage().subscribe(
     data=>{
       let content: [] = data['content'];
       if(content) {
         this._dataSourceService.createDataSource(content);
-        // this.data = this._dataSourceService.data;
-        // GlobalConstant.data = content;
-        // GlobalConstant.dataSource =  new MatTableDataSource(GlobalConstant.data);
       }
-      // this.dataSource = GlobalConstant.dataSource;
-      // this.dataSource = this._dataSourceService.dataSource();
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
 
     },(error)=>{
       console.log(error.error.message);
     });
+  }
+  getDataCount() {
+    this._ticketService.getCount().subscribe(
+      data=> {
+        console.log("Data......."+ data.count);
+
+        let count:number = data.count;
+        let sourceCount:number=0;
+        if(this._dataSourceService.data){
+          sourceCount = this._dataSourceService.data.length;
+        }
+        console.log("Count.........."+sourceCount);
+        if(count != sourceCount ){
+          this.getPage(event);
+        }
+
+      }, (error) => {
+
+      }
+    );
   }
 
   get dataSource(): MatTableDataSource<TicketDto> {
@@ -110,11 +122,13 @@ export class TicketListComponent implements OnInit {
   // dialogConfig.disableClose = true;
   dialogConfig.autoFocus=true;
   dialogConfig.width="80%";
+  dialogConfig.data="list"
   GlobalConstant.findById = null;
   this.dialog.open(SaveTicketDialogComponent,dialogConfig);
+  console.log("call dialog after close ticket-list........................");
 }
   setupFilter(column: string) {
-    console.log("setup filter called on "+column);
+    // console.log("setup filter called on "+column);
     this.dataSource.filterPredicate = (d:any, filter: string) => {
       const textToSearch = d[column] && d[column].toLowerCase() || '';
       return textToSearch.indexOf(filter) !== -1;

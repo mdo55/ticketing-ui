@@ -17,7 +17,7 @@
                       maxlength="500" minlength="3" placeholder="Enter ticket summary"
                       (keyup)="keyEvent($event)" required>
 
-                <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 3 to 500 characters!</span>
+                <!-- <br><span class="help-block" style="color:red;" *ngIf="!ticket.valid && ticket.touched">Ticket name must be 3 to 500 characters!</span> -->
               </div>
             </div>
 
@@ -32,7 +32,7 @@
                         [(ngModel)]="ticketRequest.description" [ngModelOptions]="{standalone: true}"
                         rows="3" cols="30"  (keyup)="keyEvent($event)" required>
               </textarea>
-              <br><span class="help-block" style="color:red;" *ngIf="!desc.valid && desc.touched">Enter description of the ticket!</span>
+              <!-- <br><span class="help-block" style="color:red;" *ngIf="!desc.valid && desc.touched">Enter description of the ticket!</span> -->
             </div>
           </div>
 

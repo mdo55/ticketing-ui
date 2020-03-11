@@ -28,6 +28,7 @@ export class SaveTicketDialogComponent implements OnInit {
   file: any;
   isFileUpload: boolean;
   submitValue : string ;
+  isChanged : boolean = false;
 
   constructor(private _ticketService: TicketService, public dialogRef: MatDialogRef<SaveTicketDialogComponent>,
     private changeDetectorRefs: ChangeDetectorRef, private router: Router, private formBuilder: FormBuilder,
@@ -41,7 +42,9 @@ export class SaveTicketDialogComponent implements OnInit {
 
   onSubmit() {
     this.saveTicket();
-    return this.router.navigateByUrl('/ticket-list');
+    return this.router.navigateByUrl('/redirect-url');
+    // window.location.reload();
+
   }
 
   onClose() {
@@ -62,6 +65,7 @@ export class SaveTicketDialogComponent implements OnInit {
         if (data) {
           if(data.ticketId){
             this._dataSourceService.updateData(data);
+            // this.router.navigateByUrl('/redirect-url');
           }
           if(data.message) {
             // show error dialog
@@ -72,9 +76,9 @@ export class SaveTicketDialogComponent implements OnInit {
         console.log(error.error.message);
       }
     );
-    if (this.showForm) {
-      return this.router.navigateByUrl('/ticket-list');
-    }
+  //  if (this.showForm) {
+  //     return this.router.navigateByUrl('/redirect-url');
+  //   }
     this.onClose();
   }
 
@@ -83,10 +87,10 @@ export class SaveTicketDialogComponent implements OnInit {
   }
 
   readThis(inputValue: File): void {
-    console.log("readThis..........."+inputValue);
+    // console.log("readThis..........."+inputValue);
     var file: File = inputValue;
     var myReader: FileReader = new FileReader();
-    console.log("our file is attached " + this.fileName);
+    // console.log("our file is attached " + this.fileName);
 
     myReader.onloadend = (e) => {
       // console.log("this.image="+myReader.result);
@@ -94,12 +98,12 @@ export class SaveTicketDialogComponent implements OnInit {
 
       this.base64textString = myReader.result;
       this.fileExtension = this.fileName.split(".")[1];
-      console.log("file extension updated " + this.fileExtension);
+      // console.log("file extension updated " + this.fileExtension);
       if (this.base64textString) {
         this.isFileAttached = true;
         this.ticketRequest.fileBase64 = this.base64textString;
         this.ticketRequest.attached = this.isFileAttached;
-        console.log(this.base64textString);
+        // console.log(this.base64textString);
       }
     }
     myReader.readAsDataURL(file);
@@ -109,7 +113,7 @@ export class SaveTicketDialogComponent implements OnInit {
   uploadFile(event) {
     for (let index = 0; index < event.length; index++) {
       if(0==index){
-        console.log("index", index);
+        // console.log("index", index);
       const element = event[index];
 
       }
@@ -125,5 +129,19 @@ export class SaveTicketDialogComponent implements OnInit {
     this.file = null;
     this.isFileUpload = false;
   }
+  keyEvent(){
+       if(( this.ticketRequest.ticket != '') &&  (this.ticketRequest.description  != ''))
+       {
+         this.isChanged= true;
+         console.log("if called "+this.isChanged)
+         document.getElementById("id02").style.backgroundColor='#E15D29';
+       }
+       else
+       {
+         this.isChanged = false;
+         document.getElementById("id02").style.backgroundColor='grey';
+       }
+   }
+
 
 }

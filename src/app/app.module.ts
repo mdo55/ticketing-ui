@@ -23,6 +23,7 @@ import { SaveTicketDialogComponent } from './dialog/save-ticket-dialog/save-tick
 import { DragdropDirective } from './dialog/save-ticket-dialog/dragdrop.directive';
 import { AlertdialogComponent } from './dialog/alertdialog/alertdialog.component';
 import { HeaderComponent } from './header/header.component';
+import { RedirectUrlComponent } from './redirect-url/redirect-url.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { HeaderComponent } from './header/header.component';
     DragdropDirective,
     AlertdialogComponent,
     HeaderComponent,
+    RedirectUrlComponent,
   ],
   imports: [
     BrowserModule,

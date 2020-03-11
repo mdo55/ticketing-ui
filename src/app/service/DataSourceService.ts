@@ -16,8 +16,6 @@ export class DataSourceService {
     createDataSource(_data: TicketDto[]): void {
         this.data = _data;
         this.dSource = new MatTableDataSource(this.data);
-        // this.dSource.sort = this.sort;
-        // this.dSource.paginator = this.paginator;
     }
 
     dataSource(): MatTableDataSource<TicketDto> {

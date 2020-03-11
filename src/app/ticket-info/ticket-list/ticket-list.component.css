@@ -7,19 +7,34 @@
 .search-div{
 
   margin: 10px;
-  width: 30%;
-  height: 10%;
+  width: 25%;
+  height: 85px;
   float: left;
+  /* border: solid; */
+  }
+
+  .add-form{
+    padding-top: 15px;
+    padding-left: 20px;
+    /* padding-right: 10px; */
+    width: 8%;
+    height: 70px;
+    float: left;
+    /* border: solid; */
   }
 
 .search-from-field{
   width: 90%;
+  height: 75px;
   margin-left: 10px;
   padding: 5px 10px;
   background-color: #f5f5f5;
   border-radius: 5px;
 }
 
+.search-from-field input{
+  height: 10px;
+}
 .hide{
   display: none;
   }

@@ -2,9 +2,7 @@
    <app-header></app-header>
  </div>
  <br>
-<div>
-  <button class="material-icons" (click)="saveDialog($event)"> add </button>
-</div>
+
 <div id="save-ticket-id" class="modal" >
     <!-- <span onclick="document.getElementById('save-ticket-id').style.display='none'"
 class="close"  title="Close Modal">&times;</span>  -->
@@ -14,6 +12,11 @@ class="close"  title="Close Modal">&times;</span>  -->
 <br><br><br>
 
 <div class ="ng-container">
+
+  <div class="add-form">
+     <button class="material-icons" style="float:left;" (click)="saveDialog($event)"> add </button>
+  </div>
+
 <div class="search-div">
 
     <mat-form-field class="search-from-field" floatLabel="never">
@@ -26,10 +29,10 @@ class="close"  title="Close Modal">&times;</span>  -->
   </div>
 
 <!-- Filter by type -->
-<div class="search-div">
+<div class="search-div">
 <mat-form-field class="search-from-field" floatLable="never">
 <!-- (change) -->
-<select matNativeControl [(ngModel)]="searchType" placeholder="Filter by Type" (change)="typeFilter()" (focus)="setupFilter('type')">
+<select matNativeControl [(ngModel)]="searchType" placeholder="Filter by Issue Type" (change)="typeFilter()" (focus)="setupFilter('type')">
 <option>All</option>
 <option value="Bug">Bug</option>
 <option value="NewFeature">New Feature</option>
@@ -41,7 +44,7 @@ class="close"  title="Close Modal">&times;</span>  -->
 </div>
 
 <!-- Filter by priority -->
-<div class="search-div">
+<div class="search-div" >
   <mat-form-field class="search-from-field" floatLable="never">
   <select matNativeControl [(ngModel)]="searchPriority" placeholder="Filter by Priority" (change)="priorityFilter()" (focus)="setupFilter('priority')">
   <option>All</option>

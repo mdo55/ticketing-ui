@@ -45,8 +45,8 @@ export class TicketInfoDialogComponent implements OnInit {
   onSubmit(){
     this.onClose();
     this.saveOrUpdateTicket();
-    // return this.router.navigateByUrl('/ticket-list');
-    window.location.reload();
+    return this.router.navigateByUrl('/redirect-url');
+    // window.location.reload();
     }
   displayErrorMessage(data : any){
   }
@@ -86,8 +86,7 @@ export class TicketInfoDialogComponent implements OnInit {
   }
 
   updateTicket(){
-    console.log("update: -"+this.ticketRequest);
-
+    // console.log("update: -"+this.ticketRequest);
     this._ticketService.updateTicket(this.ticketRequest).subscribe(
       data=>{
         if(data)
@@ -103,9 +102,10 @@ export class TicketInfoDialogComponent implements OnInit {
               if(this.ticketRequest.ticketId==this._dataSourceService.dSource.data[i].ticketId)
               {
                 this._dataSourceService.dSource.data[i]=this.ticketRequest;
+                this.router.navigateByUrl('/redirect-url');
               }
             }
-        }
+         }
         }
       },
       (error)=>{
