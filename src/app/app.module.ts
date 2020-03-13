@@ -24,6 +24,7 @@ import { DragdropDirective } from './dialog/save-ticket-dialog/dragdrop.directiv
 import { AlertdialogComponent } from './dialog/alertdialog/alertdialog.component';
 import { HeaderComponent } from './header/header.component';
 import { RedirectUrlComponent } from './redirect-url/redirect-url.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { RedirectUrlComponent } from './redirect-url/redirect-url.component';
     AlertdialogComponent,
     HeaderComponent,
     RedirectUrlComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,7 @@ import { RedirectUrlComponent } from './redirect-url/redirect-url.component';
     MatDialogModule,
     MatIconModule,
     MatInputModule,
-  
+
   ],
   providers: [
     TicketService, DataSourceService

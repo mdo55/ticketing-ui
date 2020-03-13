@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialogRef, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
+import { MatDialogRef, MatTableDataSource, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
 import { TicketService } from 'src/app/ticket.service';
 import { TicketRequest } from 'src/app/dto/ticket-request';
 import { DataSourceService } from 'src/app/service/DataSourceService';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-
+import { AlertdialogComponent } from '../alertdialog/alertdialog.component';
 
 @Component({
   selector: 'app-save-ticket-dialog',
@@ -32,12 +32,13 @@ export class SaveTicketDialogComponent implements OnInit {
 
   constructor(private _ticketService: TicketService, public dialogRef: MatDialogRef<SaveTicketDialogComponent>,
     private changeDetectorRefs: ChangeDetectorRef, private router: Router, private formBuilder: FormBuilder,
-    private _dataSourceService: DataSourceService) {
+    private _dataSourceService: DataSourceService,private dialog :MatDialog ,@Inject(MAT_DIALOG_DATA) public data:any) {
 
     this.ticketRequest = new TicketRequest();
   }
 
   ngOnInit() {
+
   }
 
   onSubmit() {
@@ -56,31 +57,45 @@ export class SaveTicketDialogComponent implements OnInit {
   }
 
   saveTicket() {
-    this.ticketRequest.userId = "vamsi@altimetrik.com";
-    this.ticketRequest.type = this.type;
-    this.ticketRequest.priority= this.priority;
+    this.ticketRequest.userId = "vamsi@altimetrik.com";
+    this.ticketRequest.type = this.type;
+    this.ticketRequest.priority= this.priority;
 
     this._ticketService.saveTicketInfo(this.ticketRequest).subscribe(
-      data => {
-        if (data) {
-          if(data.ticketId){
-            this._dataSourceService.updateData(data);
-            // this.router.navigateByUrl('/redirect-url');
-          }
-          if(data.message) {
-            // show error dialog
-          }
-        }
-      },
-      (error) => {
-        console.log(error.error.message);
-      }
+    data => {
+    if (data) {
+    if(data.message){
+    console.log("update functionality called....");
+    this.data = data;
+    this.openAlertDialog(this.data);
+    }
+    else if (data.ticketId){
+    this._dataSourceService.updateData(data);
+    // this.router.navigateByUrl('/redirect-url');
+    }
+    }
+    },
+    (error) => {
+    console.log(error.error.message);
+    }
     );
-  //  if (this.showForm) {
-  //     return this.router.navigateByUrl('/redirect-url');
-  //   }
+    // if (this.showForm) {
+    // return this.router.navigateByUrl('/redirect-url');
+    // }
     this.onClose();
-  }
+    }
+
+    openAlertDialog(data): void {
+      const dialogConfig =new MatDialogConfig();
+      dialogConfig.disableClose =true;
+      dialogConfig.autoFocus=true;
+      dialogConfig.width="80%";
+      dialogConfig.data = data;
+      this.dialog.open(AlertdialogComponent,dialogConfig);
+      }
+
+
+
 
   changeListener(file): void {
     this.readThis(file);

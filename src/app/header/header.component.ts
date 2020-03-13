@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  userDisplayName = '';
 
   constructor() { }
 
   ngOnInit() {
+    this.userDisplayName = sessionStorage.getItem('loggedUser');
+    console.log(JSON.parse(this.userDisplayName))
   }
 
 }

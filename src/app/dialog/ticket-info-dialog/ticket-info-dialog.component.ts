@@ -151,7 +151,6 @@ export class TicketInfoDialogComponent implements OnInit {
 
   readThis(inputValue: File): void
   {
-    console.log("readThis..........."+inputValue);
     var file: File = inputValue;
     var myReader: FileReader = new FileReader();
     console.log("our file is attached " + this.fileName);

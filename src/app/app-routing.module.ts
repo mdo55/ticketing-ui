@@ -10,6 +10,8 @@ import { TicketListComponent } from './ticket-info/ticket-list/ticket-list.compo
 import { SaveTicketDialogComponent } from './dialog/save-ticket-dialog/save-ticket-dialog.component';
 import { RedirectUrlComponent } from './redirect-url/redirect-url.component';
 import { TicketInfoDialogComponent } from './dialog/ticket-info-dialog/ticket-info-dialog.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: 'login' , component: LoginComponent },
@@ -19,6 +21,7 @@ const routes: Routes = [
    { path: 'save-ticket-dialog', component: SaveTicketDialogComponent },
    { path: 'ticket-info-dialog', component: TicketInfoDialogComponent },
    { path: 'redirect-url', component: RedirectUrlComponent  },
+   { path: 'dashboard', component: DashboardComponent},
 ];
 
 @NgModule({

@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.login(this.loginForm.value);
+    sessionStorage.setItem('loggedUser', JSON.stringify(this.loginForm.value.email));
     // this.router.navigateByUrl('/save-ticket');
     this.router.navigate(['/save-ticket']);
   }
