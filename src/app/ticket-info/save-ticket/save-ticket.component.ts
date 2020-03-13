@@ -8,7 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog , MatDialogConfig } from '@angular/material';
 import { TicketService } from 'src/app/ticket.service';
 import { GlobalConstant } from 'src/app/common/GlobalConstants';
-import { Router, UrlTree } from '@angular/router';
+import { Router, UrlTree, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { DataSourceService } from 'src/app/service/DataSourceService';
 import { SaveTicketDialogComponent } from 'src/app/dialog/save-ticket-dialog/save-ticket-dialog.component';
@@ -37,7 +37,7 @@ previewUrl:any = null;
   @Output() closeModalEvent = new EventEmitter();
   isShow: boolean;
 
-  constructor(private _ticketService:TicketService, private domSanitizer: DomSanitizer,
+  constructor(private _ticketService:TicketService, private domSanitizer: DomSanitizer,private activatedRoute: ActivatedRoute,
     private router: Router, private formBuilder: FormBuilder, private dialog :MatDialog, private _dataSourceService: DataSourceService) {
     this.showForm = false;
     GlobalConstant.dataSource= new MatTableDataSource([]);
@@ -45,6 +45,8 @@ previewUrl:any = null;
 
   ngOnInit() {
  this.saveDialog(event);
+ this.getRequestParam();
+
   }
 
 //   saveTicketInfo(event:any){
@@ -130,4 +132,10 @@ saveDialog(event:any)
   this.dialog.open(SaveTicketDialogComponent,dialogConfig);
 }
 
+getRequestParam() {
+  this.activatedRoute.queryParamMap.subscribe(
+  params => {
+  console.log("queryParamMap----------:"+ params.get('userId'));
+  });
+  }
 }
